@@ -7,16 +7,6 @@
 
 #include "eerror.h"
 
-/*
- TODO:
- Конкатенация двух string
- Поиск подстроки
- Вставка/удаление символов
- Сравнение строк
- is_emtpy проверяет является ли строка пустой
- clear удаляет все данные, оставляет строку пустой
-*/
-
 typedef struct string {
   char *data;
   size_t length;   // Size of string
@@ -82,11 +72,11 @@ char string_at(string *str, size_t index, easy_error *err);
 // @return string as Cstring
 const char *string_cstr(const string *str);
 
-/* Compare to string
+/* Compare two string
  *
  * @param str1,str2 Pointers to string objects
  * @param err Pointer to easy_error object, will write STRING_NULL_POINTER if str1 or str2 NULL
- * @return result of comparing
+ * @return result of comparing. If one of string is NULL return false
  */
 bool string_compare(string *str1, string *str2, easy_error *err);
 
