@@ -10,19 +10,19 @@ easy_error string_init_emtpy(string *str) {
   str->data = malloc(str->capacity);
 
   if (!str->data)
-    return STRING_ALLOCATION_FAILED;
+    return ALLOCATION_FAILED;
 
   str->data[0] = '\0';
 
-  return STRING_OK;
+  return OK;
 }
 
 easy_error string_from_cstr(string *str, const char *cstr) {
   if (!str)
-    return STRING_NULL_POINTER;
+    return NULL_POINTER;
 
   if (!cstr)
-    return STRING_INVALID_ARGUMENT;
+    return INVALID_ARGUMENT;
 
   size_t len = strlen(cstr);
   str->length = len;
@@ -30,11 +30,11 @@ easy_error string_from_cstr(string *str, const char *cstr) {
   str->data = malloc(str->capacity);
 
   if (!str->data)
-    return STRING_ALLOCATION_FAILED;
+    return ALLOCATION_FAILED;
 
   memcpy(str->data, cstr, str->capacity);
 
-  return STRING_OK;
+  return OK;
 }
 
 string string_create(const char *cstr) {
@@ -51,27 +51,27 @@ void string_free(string *str) {
 
 easy_error string_reserve(string *str, size_t new_capacity) {
   if (!str)
-    return STRING_NULL_POINTER;
+    return NULL_POINTER;
 
   if (new_capacity <= str->capacity)
-    return STRING_OK;
+    return OK;
 
   char *new_data = realloc(str->data, new_capacity);
   if (!new_data)
-    return STRING_ALLOCATION_FAILED;
+    return ALLOCATION_FAILED;
 
   str->data = new_data;
   str->capacity = new_capacity;
 
-  return STRING_OK;
+  return OK;
 }
 
 easy_error string_append(string *str, const char *cstr) {
   if (!str)
-    return STRING_NULL_POINTER;
+    return NULL_POINTER;
 
   if (!cstr)
-    return STRING_INVALID_ARGUMENT;
+    return INVALID_ARGUMENT;
 
   size_t cstr_len = strlen(cstr);
   size_t new_length = str->length + cstr_len;
@@ -87,12 +87,12 @@ easy_error string_append(string *str, const char *cstr) {
   memcpy(str->data + str->length, cstr, cstr_len + 1);
   str->length = new_length;
 
-  return STRING_OK;
+  return OK;
 }
 
 char string_at(string *str, size_t index, easy_error *err) {
   if (index >= str->length) {
-    *err = STRING_INVALID_INDEX;
+    *err = INVALID_INDEX;
     return '\0';
   }
 
@@ -103,7 +103,7 @@ const char *string_cstr(const string *str) { return str->data; }
 
 bool string_compare(string *str1, string *str2, easy_error *err) {
   if (!str1 || !str2) {
-    *err = STRING_NULL_POINTER;
+    *err = NULL_POINTER;
     return false;
   }
 
@@ -112,13 +112,13 @@ bool string_compare(string *str1, string *str2, easy_error *err) {
 
 easy_error string_insert(string *str, size_t pos, const char *cstr) {
   if (!str)
-    return STRING_NULL_POINTER;
+    return NULL_POINTER;
 
   if (!cstr)
-    return STRING_INVALID_ARGUMENT;
+    return INVALID_ARGUMENT;
 
   if (pos > str->length)
-    return STRING_INVALID_INDEX;
+    return INVALID_INDEX;
 
   size_t cstr_len = strlen(cstr);
   size_t new_length = str->length + cstr_len;
@@ -135,5 +135,5 @@ easy_error string_insert(string *str, size_t pos, const char *cstr) {
   memcpy(str->data + pos, cstr, cstr_len);
   str->length = new_length;
 
-  return STRING_OK;
+  return OK;
 }
