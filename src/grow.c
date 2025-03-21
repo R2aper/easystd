@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "eerror.h"
+#include "grow.h"
+
+easy_error grow_init(grow *gr, size_t element_size, size_t initial_capacity,
+                     void (*free_fn)(void *)) {
+
+  gr->data = malloc(sizeof(void *) * initial_capacity);
+  if (!gr->data)
+    return ALLOCATION_FAILED;
+
+  gr->size = 0;
+  gr->capacity = initial_capacity;
+  gr->element_size = element_size;
+  gr->free_fn = free_fn;
+
+  return OK;
+}
+
+void grow_free(grow *gr) {
+  for (size_t i = 0; i < gr->size; i++) {
+    if (gr->free_fn)
+      gr->free_fn(gr->data[i]);
+
+    free(gr->data[i]);
+  }
+
+  free(gr->data);
+  gr->data = NULL;
+  gr->size = 0;
+  gr->capacity = 0;
+}
+
+easy_error grow_push(grow *gr, const void *element) {
+  if (gr->size >= gr->capacity) {
+    gr->capacity *= 2;
+    gr->data = realloc(gr->data, sizeof(void *) * gr->capacity);
+    if (!gr->data)
+      return ALLOCATION_FAILED;
+  }
+
+  void *new_element = malloc(gr->element_size);
+  if (!new_element)
+    return ALLOCATION_FAILED;
+
+  memcpy(new_element, element, gr->element_size);
+  gr->data[gr->size++] = new_element;
+
+  return OK;
+}
+
+void *grow_get(grow *gr, size_t index, easy_error *err) {
+  if (index >= gr->size) {
+    *err = INVALID_INDEX;
+    return NULL;
+  }
+
+  return gr->data[index];
+}
