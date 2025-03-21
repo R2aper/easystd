@@ -46,8 +46,7 @@ void string_free_abs(void *str);
 
 /* Changes the size of the buffer
  *
- * NOTE:   if (new_capacity <= str->capacity)
-    return STRING_OK;
+ * NOTE: if new_capacity <= str->capacity then will return OK;
  *
  * @param str Pointer to string object
  * @param new_capacity Size of new buffer
@@ -67,7 +66,7 @@ easy_error string_append(string *str, const char *cstr);
  *
  * @param str Pointer to string object
  * @param index Index of char
- * @param err Pointer to easy_error object, will write STRING_INVALID_INDEX if index is bad
+ * @param err Pointer to easy_error object, will write INVALID_INDEX if index is bad
  * @return Char by index or '\0'
  */
 char string_at(string *str, size_t index, easy_error *err);
@@ -78,7 +77,7 @@ const char *string_cstr(const string *str);
 /* Compare two string
  *
  * @param str1,str2 Pointers to string objects
- * @param err Pointer to easy_error object, will write STRING_NULL_POINTER if str1 or str2 NULL
+ * @param err Pointer to easy_error object, will write NULL_POINTER if str1 or str2 NULL
  * @return result of comparing. If one of string is NULL return false
  */
 bool string_compare(string *str1, string *str2, easy_error *err);
