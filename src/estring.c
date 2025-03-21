@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -48,6 +49,8 @@ void string_free(string *str) {
   str->data = NULL;
   str->length = str->capacity = 0;
 }
+
+void string_free_abs(void *str) { string_free(str); }
 
 easy_error string_reserve(string *str, size_t new_capacity) {
   if (!str)

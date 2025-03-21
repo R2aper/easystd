@@ -41,6 +41,9 @@ string string_create(const char *cstr);
 // Freed string object
 void string_free(string *str);
 
+// Same as string_free, just with void* argument
+void string_free_abs(void *str);
+
 /* Changes the size of the buffer
  *
  * NOTE:   if (new_capacity <= str->capacity)
