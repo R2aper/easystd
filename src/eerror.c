@@ -2,6 +2,7 @@
 
 const char *easy_error_message(easy_error err) {
   switch (err) {
+  case OK:
     return "No error";
   case ALLOCATION_FAILED:
     return "Memory allocation failed";
