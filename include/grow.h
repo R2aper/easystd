@@ -23,6 +23,6 @@ easy_error grow_push(grow *gr, const void *element);
 
 void *grow_get(grow *gr, size_t index, easy_error *err);
 
-easy_error grow_remove(grow *gr, size_t);
+easy_error grow_remove(grow *gr, size_t index);
 
 #endif // GROW_H

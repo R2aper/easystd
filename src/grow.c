@@ -60,3 +60,19 @@ void *grow_get(grow *gr, size_t index, easy_error *err) {
 
   return gr->data[index];
 }
+
+easy_error grow_remove(grow *gr, size_t index) {
+  if (index >= gr->size)
+    return INVALID_INDEX;
+
+  if (gr->free_fn)
+    gr->free_fn(gr->data[index]);
+
+  free(gr->data[index]);
+
+  memmove(&gr->data[index], &gr->data[index + 1], (gr->size - index - 1) * sizeof(void *));
+
+  gr->size--;
+
+  return OK;
+}
