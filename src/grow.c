@@ -71,6 +71,7 @@ void *grow_get(grow *gr, size_t index, easy_error *err) {
     return NULL;
   }
 
+  *err = OK;
   return gr->data[index];
 }
 

@@ -103,6 +103,7 @@ char string_at(string *str, size_t index, easy_error *err) {
     return '\0';
   }
 
+  *err = OK;
   return str->data[index];
 }
 
@@ -117,6 +118,7 @@ bool string_compare(string *str1, string *str2, easy_error *err) {
     return false;
   }
 
+  *err = OK;
   return strcmp(str1->data, str2->data) == 0;
 }
 
