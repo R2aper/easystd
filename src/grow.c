@@ -11,8 +11,8 @@ easy_error grow_init(grow *gr, size_t element_size, size_t initial_capacity,
   CHECK_NULL_PTR(gr);
 
   gr->data = malloc(sizeof(void *) * initial_capacity);
-  if (!gr->data)
-    return ALLOCATION_FAILED;
+
+  CHECK_ALLOCATION(gr->data);
 
   gr->size = 0;
   gr->capacity = initial_capacity;
@@ -45,13 +45,11 @@ easy_error grow_push(grow *gr, const void *element) {
   if (gr->size >= gr->capacity) {
     gr->capacity *= 2;
     gr->data = realloc(gr->data, sizeof(void *) * gr->capacity);
-    if (!gr->data)
-      return ALLOCATION_FAILED;
+    CHECK_ALLOCATION(gr->data);
   }
 
   void *new_element = malloc(gr->element_size);
-  if (!new_element)
-    return ALLOCATION_FAILED;
+  CHECK_ALLOCATION(new_element);
 
   memcpy(new_element, element, gr->element_size);
   gr->data[gr->size++] = new_element;
