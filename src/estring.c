@@ -6,12 +6,13 @@
 #include "estring.h"
 
 easy_error string_init_emtpy(string *str) {
+  CHECK_NULL_PTR(str);
+
   str->capacity = 16;
   str->length = 0;
   str->data = malloc(str->capacity);
 
-  if (!str->data)
-    return ALLOCATION_FAILED;
+  CHECK_ALLOCATION(str->data);
 
   str->data[0] = '\0';
 
@@ -19,8 +20,7 @@ easy_error string_init_emtpy(string *str) {
 }
 
 easy_error string_from_cstr(string *str, const char *cstr) {
-  if (!str)
-    return NULL_POINTER;
+  CHECK_NULL_PTR(str);
 
   if (!cstr)
     return INVALID_ARGUMENT;
@@ -30,8 +30,7 @@ easy_error string_from_cstr(string *str, const char *cstr) {
   str->capacity = len + 1;
   str->data = malloc(str->capacity);
 
-  if (!str->data)
-    return ALLOCATION_FAILED;
+  CHECK_ALLOCATION(str->data);
 
   memcpy(str->data, cstr, str->capacity);
 
@@ -53,15 +52,13 @@ void string_free(string *str) {
 void string_free_abs(void *str) { string_free(str); }
 
 easy_error string_reserve(string *str, size_t new_capacity) {
-  if (!str)
-    return NULL_POINTER;
+  CHECK_NULL_PTR(str);
 
   if (new_capacity <= str->capacity)
     return OK;
 
   char *new_data = realloc(str->data, new_capacity);
-  if (!new_data)
-    return ALLOCATION_FAILED;
+  CHECK_ALLOCATION(new_data);
 
   str->data = new_data;
   str->capacity = new_capacity;
@@ -70,8 +67,7 @@ easy_error string_reserve(string *str, size_t new_capacity) {
 }
 
 easy_error string_append(string *str, const char *cstr) {
-  if (!str)
-    return NULL_POINTER;
+  CHECK_NULL_PTR(str);
 
   if (!cstr)
     return INVALID_ARGUMENT;
@@ -94,6 +90,14 @@ easy_error string_append(string *str, const char *cstr) {
 }
 
 char string_at(string *str, size_t index, easy_error *err) {
+  if (!err)
+    return '\0';
+
+  if (!str) {
+    *err = NULL_POINTER;
+    return '\0';
+  }
+
   if (index >= str->length) {
     *err = INVALID_INDEX;
     return '\0';
@@ -105,6 +109,9 @@ char string_at(string *str, size_t index, easy_error *err) {
 const char *string_cstr(const string *str) { return str->data; }
 
 bool string_compare(string *str1, string *str2, easy_error *err) {
+  if (!err)
+    return false;
+
   if (!str1 || !str2) {
     *err = NULL_POINTER;
     return false;
@@ -114,8 +121,7 @@ bool string_compare(string *str1, string *str2, easy_error *err) {
 }
 
 easy_error string_insert(string *str, size_t pos, const char *cstr) {
-  if (!str)
-    return NULL_POINTER;
+  CHECK_NULL_PTR(str);
 
   if (!cstr)
     return INVALID_ARGUMENT;

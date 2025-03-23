@@ -1,6 +1,14 @@
 #ifndef EERROR_H
 #define EERROR_H
 
+#define CHECK_NULL_PTR(data)                                                                       \
+  if (!data)                                                                                       \
+  return NULL_POINTER
+
+#define CHECK_ALLOCATION(data)                                                                     \
+  if (!data)                                                                                       \
+  return ALLOCATION_FAILED
+
 // Struct for all errors in library
 typedef enum {
   OK = 0,

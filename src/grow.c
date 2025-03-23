@@ -8,6 +8,8 @@
 easy_error grow_init(grow *gr, size_t element_size, size_t initial_capacity,
                      void (*free_fn)(void *)) {
 
+  CHECK_NULL_PTR(gr);
+
   gr->data = malloc(sizeof(void *) * initial_capacity);
   if (!gr->data)
     return ALLOCATION_FAILED;
@@ -35,6 +37,11 @@ void grow_free(grow *gr) {
 }
 
 easy_error grow_push(grow *gr, const void *element) {
+  CHECK_NULL_PTR(gr);
+
+  if (!element)
+    return INVALID_ARGUMENT;
+
   if (gr->size >= gr->capacity) {
     gr->capacity *= 2;
     gr->data = realloc(gr->data, sizeof(void *) * gr->capacity);
@@ -53,6 +60,14 @@ easy_error grow_push(grow *gr, const void *element) {
 }
 
 void *grow_get(grow *gr, size_t index, easy_error *err) {
+  if (!err)
+    return NULL;
+
+  if (!gr) {
+    *err = NULL_POINTER;
+    return NULL;
+  }
+
   if (index >= gr->size) {
     *err = INVALID_INDEX;
     return NULL;
@@ -62,6 +77,8 @@ void *grow_get(grow *gr, size_t index, easy_error *err) {
 }
 
 easy_error grow_remove(grow *gr, size_t index) {
+  CHECK_NULL_PTR(gr);
+
   if (index >= gr->size)
     return INVALID_INDEX;
 
