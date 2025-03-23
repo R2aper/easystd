@@ -32,6 +32,7 @@ easy_error string_from_cstr(string *str, const char *cstr);
 
 /* Create string. If cstr is empty, return emtpy string
  * NOTE: str should be freed after using
+ * NOTE: use this function if you sure cstr is not NULL
  *
  * @param cstr Pointer to Cstring
  * @return String object
@@ -46,7 +47,7 @@ void string_free_abs(void *str);
 
 /* Changes the size of the buffer
  *
- * NOTE: if new_capacity <= str->capacity then will return OK;
+ * NOTE: if (new_capacity <= str->capacity) then will return OK;
  *
  * @param str Pointer to string object
  * @param new_capacity Size of new buffer
