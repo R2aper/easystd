@@ -71,7 +71,7 @@ easy_error string_append(string *str, const char *cstr);
  */
 char string_at(string *str, size_t index, easy_error *err);
 
-// @return string as Cstring
+// @return string as Cstring or NULL if str is bad
 const char *string_cstr(const string *str);
 
 /* Compare two string

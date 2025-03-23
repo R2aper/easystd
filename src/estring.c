@@ -106,7 +106,7 @@ char string_at(string *str, size_t index, easy_error *err) {
   return str->data[index];
 }
 
-const char *string_cstr(const string *str) { return str->data; }
+const char *string_cstr(const string *str) { return (str) ? str->data : NULL; }
 
 bool string_compare(string *str1, string *str2, easy_error *err) {
   if (!err)
