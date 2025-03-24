@@ -5,27 +5,6 @@
 
 #include "eerror.h"
 
-// macros for easier usage of grow_get
-#define INT_GET(grow, index, err) (*(int *)grow_get((grow), (index), (err)))
-#define UINT_GET(grow, index, err) (*(unsigned int *)grow_get((grow), (index), (err)))
-
-#define SHRT_GET(grow, index, err) (*(short *)grow_get((grow), (index), (err)))
-#define USHRT_GET(grow, index, err) (*(unsigned short *)grow_get((grow), (index), (err)))
-
-#define LONG_GET(grow, index, err) (*(long *)grow_get((grow), (index), (err)))
-#define ULONG_GET(grow, index, err) (*(unsigned long *)grow_get((grow), (index), (err)))
-
-#define LLONG_GET(grow, index, err) (*(long long *)grow_get((grow), (index), (err)))
-#define ULLONG_GET(grow, index, err) (*(unsigned long long *)grow_get((grow), (index), (err)))
-
-#define FLOAT_GET(grow, index, err) (*(float *)grow_get((grow), (index), (err)))
-#define DOUBLE_GET(grow, index, err) (*(double *)grow_get((grow), (index), (err)))
-#define LDOUBLE_GET(grow, index, err) (*(long double *)grow_get((grow), (index), (err)))
-
-#define CHAR_GET(grow, index, err) (*(char *)grow_get((grow), (index), (err)))
-#define SCHAR_GET(grow, index, err) (*(signed char *)grow_get((grow), (index), (err)))
-#define UCHAR_GET(grow, index, err) (*(unsigned char *)grow_get((grow), (index), (err)))
-
 // grow is container for simple and secure store any type of data
 typedef struct grow {
   void **data;
