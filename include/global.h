@@ -1,7 +1,11 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-// macros for converting void* to type
+/**
+ * @defgroup macros Macros for converting void* to type
+ * @{
+ */
+
 #define INT(expression) *(int *)expression
 #define UINT(expression) *(unsigned int *)expression
 
@@ -21,5 +25,7 @@
 #define CHAR(expression) *(char *)expression
 #define SCHAR(expression) *(signed char *)expression
 #define UCHAR(expression) *(unsigned char *)expression
+
+/// @}
 
 #endif // GLOBAL_H

@@ -7,22 +7,28 @@
 
 #include "eerror.h"
 
+/// string is struct for easier usage of strings type
 typedef struct string {
   char *data;
   size_t length;   // Size of string
   size_t capacity; // Size of allocate memory
 } string;
 
-/* Create emtpy string
- * NOTE: str should be freed after using
+/// @defgroup String Module of function relative to string type
+/// @{
+
+/**
+ * @brief Create emtpy string
+ * @note str should be freed after using
  *
  * @param str Pointer to string object
  * @return 0 on success or easy_error
  */
 easy_error string_init_emtpy(string *str);
 
-/* Create string from Cstring
- * NOTE: str should be freed after using
+/**
+ * @brief Create string from Cstring
+ * @note str should be freed after using
  *
  * @param str Pointer to string object
  * @param cstr Cstring
@@ -30,24 +36,26 @@ easy_error string_init_emtpy(string *str);
  */
 easy_error string_from_cstr(string *str, const char *cstr);
 
-/* Create string. If cstr is empty, return emtpy string
- * NOTE: str should be freed after using
- * NOTE: use this function if you sure cstr is not NULL
+/**
+ * @brief Create string. If cstr is empty, return emtpy string
+ * @note str should be freed after using
+ * @note use this function if you sure cstr is not NULL
  *
  * @param cstr Pointer to Cstring
  * @return String object
  */
 string string_create(const char *cstr);
 
-// Freed string object
+/// @brief Freed string object
 void string_free(string *str);
 
-// Same as string_free, just with void* argument
+/// @brief Same as string_free, just with void* argument
 void string_free_abs(void *str);
 
-/* Changes the size of the buffer
+/**
+ * @brief Changes the size of the buffer
  *
- * NOTE: if (new_capacity <= str->capacity) then will return OK;
+ * @note if (new_capacity <= str->capacity) then will return OK;
  *
  * @param str Pointer to string object
  * @param new_capacity Size of new buffer
@@ -55,7 +63,8 @@ void string_free_abs(void *str);
  */
 easy_error string_reserve(string *str, size_t new_capacity);
 
-/* Add Cstring to end of str
+/**
+ * @brief Add Cstring to end of str
  *
  * @param str Pointer to string object
  * @param cstr Cstring
@@ -63,7 +72,8 @@ easy_error string_reserve(string *str, size_t new_capacity);
  */
 easy_error string_append(string *str, const char *cstr);
 
-/* Get char by index
+/**
+ * @brief Get char by index
  *
  * @param str Pointer to string object
  * @param index Index of char
@@ -72,10 +82,11 @@ easy_error string_append(string *str, const char *cstr);
  */
 char string_at(string *str, size_t index, easy_error *err);
 
-// @return string as Cstring or NULL if str is bad
+/// @brief string as Cstring or NULL if str is bad
 const char *string_cstr(const string *str);
 
-/* Compare two string
+/**
+ * @brief Compare two string
  *
  * @param str1,str2 Pointers to string objects
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
@@ -83,7 +94,8 @@ const char *string_cstr(const string *str);
  */
 bool string_compare(string *str1, string *str2, easy_error *err);
 
-/* Insert Cstring to given positon
+/**
+ * @brief Insert Cstring to given positon
  *
  * @param str Pointer to string object
  * @param pos Position to insert
@@ -91,5 +103,7 @@ bool string_compare(string *str1, string *str2, easy_error *err);
  * @return 0 on success or easy_error
  */
 easy_error string_insert(string *str, size_t pos, const char *cstr);
+
+///@}
 
 #endif // ESTRING_H

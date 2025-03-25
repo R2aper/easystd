@@ -1,6 +1,9 @@
 #ifndef EERROR_H
 #define EERROR_H
 
+/// @defgroup Errors Module for handling errors
+/// @{
+
 #define CHECK_NULL_PTR(data)                                                                       \
   if (!data)                                                                                       \
   return NULL_POINTER
@@ -13,7 +16,7 @@
   if (err)                                                                                         \
   *err = code_error
 
-// Struct for all errors in library
+/// @brief Struct for all errors in library
 typedef enum {
   OK = 0,
   ALLOCATION_FAILED = -1,
@@ -24,7 +27,9 @@ typedef enum {
   STRING_RANGE_ERROR = -6,
 } easy_error;
 
-// @return text of error
+/// @brief return text of error
 const char *easy_error_message(easy_error err);
+
+///@}
 
 #endif // EERROR_H

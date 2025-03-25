@@ -5,7 +5,7 @@
 
 #include "eerror.h"
 
-// grow is container for simple and secure store any type of data
+/// grow is container for simple and secure store any type of data
 typedef struct grow {
   void **data;
   size_t size;
@@ -14,8 +14,12 @@ typedef struct grow {
   void (*free_fn)(void *); // Free function
 } grow;
 
-/* Create container by given capacity
- * NOTE: grow should be freed after using
+/// @defgroup Grow Module of function relative to grow type
+/// @{
+
+/**
+ * @brief  Create container by given capacity
+ * @note grow should be freed after using
  *
  * @param grow Pointer to grow object
  * @param element_size size of data type that will be store
@@ -26,10 +30,11 @@ typedef struct grow {
 easy_error grow_init(grow *gr, size_t element_size, size_t initial_capacity,
                      void (*free_fn)(void *));
 
-// Freed grow object
+/// @brief  Freed grow object
 void grow_free(grow *gr);
 
-/* Pushes element to container
+/**
+ * Pushes element to container
  *
  * @param grow Pointer to grow object
  * @param element Pointer to new element
@@ -37,7 +42,8 @@ void grow_free(grow *gr);
  */
 easy_error grow_push(grow *gr, const void *element);
 
-/* Returns element by given index
+/**
+ * Returns element by given index
  *
  * @param grow Pointer to grow object
  * @param index index of element
@@ -46,12 +52,15 @@ easy_error grow_push(grow *gr, const void *element);
  */
 void *grow_get(grow *gr, size_t index, easy_error *err);
 
-/* Removes element by given index
+/**
+ * Removes element by given index
  *
  * @param grow Pointer to grow object
  * @param index index of element
  * @return 0 on success or easy_error
  */
 easy_error grow_remove(grow *gr, size_t index);
+
+///@}
 
 #endif // GROW_H
