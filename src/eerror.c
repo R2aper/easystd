@@ -12,8 +12,8 @@ const char *easy_error_message(easy_error err) {
     return "Null pointer";
   case INVALID_ARGUMENT:
     return "Invalid argument";
-  case STRING_EMPTY_OPERATION:
-    return "Empty string operation";
+  case INVALID_ITERATOR:
+    return "Invalid iterator";
   case STRING_RANGE_ERROR:
     return "Invalid range";
   default:

@@ -23,7 +23,7 @@ typedef enum {
   INVALID_INDEX = -2,
   NULL_POINTER = -3,
   INVALID_ARGUMENT = -4,
-  STRING_EMPTY_OPERATION = -5,
+  INVALID_ITERATOR = -5,
   STRING_RANGE_ERROR = -6,
 } easy_error;
 
