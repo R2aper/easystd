@@ -6,7 +6,7 @@
 #include "estring.h"
 
 easy_error string_init_emtpy(string *str) {
-  CHECK_NULL_PTR(str);
+  CHECK_NULL_PTR((str && str->data));
 
   str->capacity = 16;
   str->length = 0;
@@ -20,7 +20,7 @@ easy_error string_init_emtpy(string *str) {
 }
 
 easy_error string_from_cstr(string *str, const char *cstr) {
-  CHECK_NULL_PTR(str);
+  CHECK_NULL_PTR((str && str->data));
 
   if (!cstr)
     return INVALID_ARGUMENT;
@@ -52,7 +52,7 @@ void string_free(string *str) {
 void string_free_abs(void *str) { string_free(str); }
 
 easy_error string_reserve(string *str, size_t new_capacity) {
-  CHECK_NULL_PTR(str);
+  CHECK_NULL_PTR((str && str->data));
 
   if (new_capacity <= str->capacity)
     return OK;
@@ -67,7 +67,7 @@ easy_error string_reserve(string *str, size_t new_capacity) {
 }
 
 easy_error string_append(string *str, const char *cstr) {
-  CHECK_NULL_PTR(str);
+  CHECK_NULL_PTR((str && str->data));
 
   if (!cstr)
     return INVALID_ARGUMENT;
@@ -105,10 +105,10 @@ char string_at(string *str, size_t index, easy_error *err) {
   return str->data[index];
 }
 
-const char *string_cstr(const string *str) { return (str) ? str->data : NULL; }
+const char *string_cstr(const string *str) { return (str && str->data) ? str->data : NULL; }
 
 bool string_compare(string *str1, string *str2, easy_error *err) {
-  if (!str1 || !str2) {
+  if (!(str1 && str2)) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return false;
   }
@@ -118,7 +118,7 @@ bool string_compare(string *str1, string *str2, easy_error *err) {
 }
 
 easy_error string_insert(string *str, size_t pos, const char *cstr) {
-  CHECK_NULL_PTR(str);
+  CHECK_NULL_PTR(str && str->data);
 
   if (!cstr)
     return INVALID_ARGUMENT;
