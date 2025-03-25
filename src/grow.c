@@ -58,20 +58,18 @@ easy_error grow_push(grow *gr, const void *element) {
 }
 
 void *grow_get(grow *gr, size_t index, easy_error *err) {
-  if (!err)
-    return NULL;
-
   if (!gr) {
-    *err = NULL_POINTER;
+    SET_CODE_ERROR(err, NULL_POINTER);
     return NULL;
   }
 
   if (index >= gr->size) {
-    *err = INVALID_INDEX;
+    SET_CODE_ERROR(err, INVALID_INDEX);
     return NULL;
   }
 
-  *err = OK;
+  SET_CODE_ERROR(err, OK);
+
   return gr->data[index];
 }
 

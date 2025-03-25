@@ -90,35 +90,30 @@ easy_error string_append(string *str, const char *cstr) {
 }
 
 char string_at(string *str, size_t index, easy_error *err) {
-  if (!err)
-    return '\0';
-
   if (!str) {
-    *err = NULL_POINTER;
+    SET_CODE_ERROR(err, NULL_POINTER);
     return '\0';
   }
 
   if (index >= str->length) {
-    *err = INVALID_INDEX;
+    SET_CODE_ERROR(err, INVALID_INDEX);
     return '\0';
   }
 
-  *err = OK;
+  SET_CODE_ERROR(err, OK);
+
   return str->data[index];
 }
 
 const char *string_cstr(const string *str) { return (str) ? str->data : NULL; }
 
 bool string_compare(string *str1, string *str2, easy_error *err) {
-  if (!err)
-    return false;
-
   if (!str1 || !str2) {
-    *err = NULL_POINTER;
+    SET_CODE_ERROR(err, NULL_POINTER);
     return false;
   }
 
-  *err = OK;
+  SET_CODE_ERROR(err, OK);
   return strcmp(str1->data, str2->data) == 0;
 }
 

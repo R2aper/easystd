@@ -9,6 +9,10 @@
   if (!data)                                                                                       \
   return ALLOCATION_FAILED
 
+#define SET_CODE_ERROR(err, code_error)                                                            \
+  if (err)                                                                                         \
+  *err = code_error
+
 // Struct for all errors in library
 typedef enum {
   OK = 0,

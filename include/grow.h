@@ -41,7 +41,8 @@ easy_error grow_push(grow *gr, const void *element);
  *
  * @param grow Pointer to grow object
  * @param index index of element
- * @param err Pointer to easy_error object, will write INVALID_INDEX if index is bad
+ * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ * @return element of container
  */
 void *grow_get(grow *gr, size_t index, easy_error *err);
 
