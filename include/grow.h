@@ -9,12 +9,12 @@
 typedef struct grow {
   void **data;
   size_t size;
-  size_t capacity;         // Size of allocate memory
+  size_t capacity;         // Size of allocate elements
   size_t element_size;     // Size of one element
   void (*free_fn)(void *); // Free function
 } grow;
 
-/// @defgroup Grow Module of function relative to grow type
+/// @defgroup Grow Functios relative to grow type
 /// @{
 
 /**

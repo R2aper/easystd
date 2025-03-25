@@ -14,7 +14,7 @@ typedef struct string {
   size_t capacity; // Size of allocate memory
 } string;
 
-/// @defgroup String Module of function relative to string type
+/// @defgroup String Functions relative to string type
 /// @{
 
 /**
