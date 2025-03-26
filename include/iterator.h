@@ -38,6 +38,6 @@
 DECLARE_ITERATOR(grow, grow)
 
 // Declare array_iterator
-DECLARE_ITERATOR(array, array);
+DECLARE_ITERATOR(array, array)
 
 #endif // ITERATOR_H
