@@ -7,6 +7,13 @@
 
 #include "eerror.h"
 
+/**
+ * @def IS_EMTPY(string)
+ * @brief Checks if string is emtpy
+ * @warning Make sure string object is not NULL
+ */
+#define IS_EMPTY(string) ((string)->length == 0)
+
 /// string is struct for easier usage of strings type
 typedef struct string {
   char *data;
