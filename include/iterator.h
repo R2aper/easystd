@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "array.h"
 #include "eerror.h"
 #include "grow.h"
 
@@ -35,5 +36,8 @@
 
 // Declare grow_iterator
 DECLARE_ITERATOR(grow, grow)
+
+// Declare array_iterator
+DECLARE_ITERATOR(array, array);
 
 #endif // ITERATOR_H

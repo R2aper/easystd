@@ -24,7 +24,7 @@ typedef enum {
   NULL_POINTER = -3,
   INVALID_ARGUMENT = -4,
   INVALID_ITERATOR = -5,
-  STRING_RANGE_ERROR = -6,
+  ARRAY_OVERFLOW = -6,
 } easy_error;
 
 /// @brief return text of error
