@@ -1,5 +1,5 @@
-#ifndef ESTRING_H
-#define ESTRING_H
+#ifndef ARRAY_H
+#define ARRAY_H
 
 #include <stdlib.h>
 
@@ -63,4 +63,4 @@ easy_error array_remove(array *ar, size_t index);
 
 ///@}
 
-#endif // ESTRING_H
+#endif // ARRAY_H
