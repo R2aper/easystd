@@ -14,8 +14,8 @@ const char *easy_error_message(easy_error err) {
     return "Invalid argument";
   case INVALID_ITERATOR:
     return "Invalid iterator";
-  case STRING_RANGE_ERROR:
-    return "Invalid range";
+  case ARRAY_OVERFLOW:
+    return "Trying pushing element into full array";
   default:
     return "Unknown error";
   }
