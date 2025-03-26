@@ -6,7 +6,7 @@
 #include "estring.h"
 
 easy_error string_init_emtpy(string *str) {
-  CHECK_NULL_PTR((str && str->data));
+  CHECK_NULL_PTR(str);
 
   str->capacity = 16;
   str->length = 0;
@@ -20,7 +20,7 @@ easy_error string_init_emtpy(string *str) {
 }
 
 easy_error string_from_cstr(string *str, const char *cstr) {
-  CHECK_NULL_PTR((str && str->data));
+  CHECK_NULL_PTR(str);
 
   if (!cstr)
     return INVALID_ARGUMENT;

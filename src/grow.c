@@ -8,7 +8,7 @@
 easy_error grow_init(grow *gr, size_t element_size, size_t initial_capacity,
                      void (*free_fn)(void *)) {
 
-  CHECK_NULL_PTR(gr && gr->data);
+  CHECK_NULL_PTR(gr);
 
   gr->data = malloc(sizeof(void *) * initial_capacity);
 
