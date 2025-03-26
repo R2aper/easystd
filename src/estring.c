@@ -143,3 +143,17 @@ easy_error string_insert(string *str, size_t pos, const char *cstr) {
 
   return OK;
 }
+
+easy_error string_clear(string *str) {
+  CHECK_NULL_PTR(str && str->data);
+
+  free(str->data);
+  char *new_data = malloc(sizeof(char));
+  CHECK_ALLOCATION(new_data);
+
+  new_data[0] = '\0';
+  str->length = 0;
+  str->capacity = 1;
+
+  return OK;
+}

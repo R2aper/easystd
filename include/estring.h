@@ -111,6 +111,14 @@ bool string_compare(string *str1, string *str2, easy_error *err);
  */
 easy_error string_insert(string *str, size_t pos, const char *cstr);
 
+/**
+ * @brief Erases all chars from the string
+ *
+ * @param str Pointer to string object
+ * @return 0 on success or easy_error
+ */
+easy_error string_clear(string *str);
+
 ///@}
 
 #endif // ESTRING_H
