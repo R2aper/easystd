@@ -4,6 +4,47 @@
 
 #include "eerror.h"
 #include "estring.h"
+#include "global.h"
+
+int *bad_char_table(const char *F) {
+  if (!F)
+    return NULL;
+
+  int *table = (int *)malloc(256 * sizeof(int)); // 256 for everu ASCII char
+  for (int i = 0; i < 256; i++)
+    table[i] = -1;
+
+  for (int i = 0; i < strlen(F); i++)
+    table[(unsigned char)F[i]] = i;
+
+  return table;
+}
+
+int boyer_moore_search(const char *T, const char *F) {
+  if (!T || !F)
+    return NULL_POINTER;
+
+  int n = strlen(T);
+  int m = strlen(F);
+  int pos = -1;
+
+  int *bad_char = bad_char_table(F);
+  int s = 0;
+  while (s <= n - m) {
+    int j = m - 1;
+    while (j >= 0 && F[j] == T[s + j])
+      j--;
+    if (j < 0) {
+      pos = s;
+      break;
+    } else {
+      int bad_char_shift = j - bad_char[(unsigned char)T[s + j]];
+      s += MAX(1, bad_char_shift);
+    }
+  }
+  free(bad_char);
+  return pos;
+}
 
 string *string_init_emtpy() {
   string *str = (string *)malloc(sizeof(string));
@@ -102,6 +143,14 @@ char string_at(string *str, size_t index, easy_error *err) {
 }
 
 const char *string_cstr(const string *str) { return (str && str->data) ? str->data : NULL; }
+
+int string_find(string *str, const char *fragment) {
+  CHECK_NULL_PTR(str);
+  if (!fragment)
+    return INVALID_ARGUMENT;
+
+  return boyer_moore_search(string_cstr(str), fragment);
+}
 
 bool string_compare(string *str1, string *str2, easy_error *err) {
   if (!(str1 && str2)) {
