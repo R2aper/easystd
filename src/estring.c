@@ -5,41 +5,37 @@
 #include "eerror.h"
 #include "estring.h"
 
-easy_error string_init_emtpy(string *str) {
-  CHECK_NULL_PTR(str);
+string *string_init_emtpy() {
+  string *str = (string *)malloc(sizeof(string));
 
   str->capacity = 16;
   str->length = 0;
   str->data = malloc(str->capacity);
 
-  CHECK_ALLOCATION(str->data);
-
   str->data[0] = '\0';
 
-  return OK;
+  return str;
 }
 
-easy_error string_from_cstr(string *str, const char *cstr) {
-  CHECK_NULL_PTR(str);
-
+string *string_from_cstr(const char *cstr) {
   if (!cstr)
-    return INVALID_ARGUMENT;
+    return NULL;
+
+  string *str = (string *)malloc(sizeof(string));
 
   size_t len = strlen(cstr);
   str->length = len;
   str->capacity = len + 1;
   str->data = malloc(str->capacity);
 
-  CHECK_ALLOCATION(str->data);
-
   memcpy(str->data, cstr, str->capacity);
 
-  return OK;
+  return str;
 }
 
-string string_create(const char *cstr) {
-  string str;
-  (cstr && !cstr[0]) ? string_init_emtpy(&str) : string_from_cstr(&str, cstr);
+string *string_create(const char *cstr) {
+  string *str = (string *)malloc(sizeof(string));
+  (cstr && !cstr[0]) ? string_init_emtpy() : string_from_cstr(cstr);
   return str;
 }
 

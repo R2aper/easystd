@@ -28,20 +28,18 @@ typedef struct string {
  * @brief Create emtpy string
  * @note str should be freed after using
  *
- * @param str Pointer to string object
- * @return 0 on success or easy_error
+ * @return Initialized string object
  */
-easy_error string_init_emtpy(string *str);
+string *string_init_emtpy();
 
 /**
  * @brief Create string from Cstring
  * @note str should be freed after using
  *
- * @param str Pointer to string object
  * @param cstr Cstring
- * @return 0 on success or easy_error
+ * @return Initialized string object
  */
-easy_error string_from_cstr(string *str, const char *cstr);
+string *string_from_cstr(const char *cstr);
 
 /**
  * @brief Create string. If cstr is empty, return emtpy string
@@ -49,9 +47,9 @@ easy_error string_from_cstr(string *str, const char *cstr);
  * @note use this function if you sure cstr is not NULL
  *
  * @param cstr Pointer to Cstring
- * @return String object
+ * @return Initialized string object
  */
-string string_create(const char *cstr);
+string *string_create(const char *cstr);
 
 /// @brief Freed string object
 void string_free(string *str);
