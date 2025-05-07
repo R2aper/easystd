@@ -3,17 +3,19 @@ CC = gcc
 CFLAGS = -std=c23 -Wall -Wextra -pedantic -Iinclude -fPIC
 DEBUG_FLAGS = -g
 RELEASE_FLAGS = -O3
+LDFLAGS = -shared # for dynamic lib
 
 # Directories
 SRC_DIR = src
 INC_DIR = include
 BUILD_DIR = build
+OBJ_DIR = obj
 
 # Src and obj files 
-SRC = $(wildcard $(SRC_DIR)/*.c)
-OBJ = $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC))
-TARGET = libestd.a   # For static lib 
-# TARGET = libmylib.so  # For dynamic lib 
+SRC = $(wildcard $(SRC_DIR)/*.c) # All src/.c files
+OBJ = $(patsubst $(SRC_DIR)/%.c, ${BUILD_DIR}/$(OBJ_DIR)/%.o, $(SRC)) # all .c files changes into .o files
+TARGET_STATIC = libestd.a 
+TARGET_DYNAMIC = libestd.so
 
 # Mode(Default is debug) 
 ifeq ($(release),1)
@@ -22,33 +24,35 @@ else
     CFLAGS += $(DEBUG_FLAGS)
 endif
 
-# For dynamic add:
-# LDFLAGS = -shared
-
 .PHONY: all clean install
 
-all: $(BUILD_DIR) $(TARGET)
+all: create_dir static
 
-# build static lib 
-$(TARGET): $(OBJ)
+static: ${TARGET_STATIC}
+dynamic: ${TARGET_DYNAMIC}
+
+$(TARGET_STATIC): $(OBJ)
 	ar rcs $(BUILD_DIR)/$@ $^
 	ranlib $(BUILD_DIR)/$@   
 
-# For dynamic lib (Uncomment)
-# $(TARGET): $(OBJ)
-#	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
+# For dynamic lib 
+$(TARGET_DYNAMIC): $(OBJ)
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o ${BUILD_DIR}/$@
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+${BUILD_DIR}/$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+create_dir:
+	mkdir -p $(BUILD_DIR)/${OBJ_DIR}
 
 clean:
-	rm -rf $(BUILD_DIR) $(TARGET)
+	rm -rf ${BUILD_DIR} 
 
-#install: $(TARGET)
-#	install -d /usr/local/lib/
-#	install -m 644 $(TARGET) /usr/local/lib/
-#	install -d /usr/local/include/mylib/
-#	install -m 644 $(INC_DIR)/*.h /usr/local/include/mylib/
+install: 
+	install -m 644 ${BUILD_DIR}/libestd* /usr/local/lib/
+	install -d /usr/local/include/libestd/
+	install -m 644 $(INC_DIR)/*.h /usr/local/include/libestd
+
+uninstall:
+	rm -rf /usr/local/lib/libestd*
+	rm -rf /usr/local/include/libestd
