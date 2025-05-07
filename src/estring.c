@@ -75,9 +75,7 @@ string *string_from_cstr(const char *cstr) {
 }
 
 string *string_create(const char *cstr) {
-  string *str = (string *)malloc(sizeof(string));
-  (cstr && !cstr[0]) ? string_init_emtpy() : string_from_cstr(cstr);
-  return str;
+  return (cstr && !cstr[0]) ? string_init_emtpy() : string_from_cstr(cstr);
 }
 
 void string_free(string *str) {
