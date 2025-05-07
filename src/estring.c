@@ -202,3 +202,20 @@ easy_error string_clear(string *str) {
 
   return OK;
 }
+
+easy_error string_shrink_to_fit(string *str) {
+  CHECK_NULL_PTR(str);
+
+  size_t new_capacity = str->length + 1;
+
+  if (str->capacity == new_capacity)
+    return OK;
+
+  char *new_data = realloc(str->data, new_capacity);
+  CHECK_ALLOCATION(str);
+
+  str->data = new_data;
+  str->capacity = new_capacity;
+
+  return OK;
+}

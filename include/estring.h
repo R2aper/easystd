@@ -147,6 +147,14 @@ easy_error string_insert(string *str, size_t pos, const char *cstr);
  */
 easy_error string_clear(string *str);
 
+/**
+ * @brief reduce str->capacity to str->length
+ *
+ * @param str Pointer to string object
+ * @return 0 on success or easy_error
+ */
+easy_error string_shrink_to_fit(string *str);
+
 ///@}
 
 #endif // ESTRING_H
