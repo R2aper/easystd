@@ -84,6 +84,7 @@ void string_free(string *str) {
   free(str->data);
   str->data = NULL;
   str->length = str->capacity = 0;
+  free(str);
 }
 
 void string_free_abs(void *str) { string_free(str); }
