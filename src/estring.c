@@ -162,7 +162,7 @@ bool string_compare(string *str1, string *str2, easy_error *err) {
 }
 
 easy_error string_insert(string *str, size_t pos, const char *cstr) {
-  CHECK_NULL_PTR(str && str->data);
+  CHECK_NULL_PTR((str && str->data));
 
   if (!cstr)
     return INVALID_ARGUMENT;
