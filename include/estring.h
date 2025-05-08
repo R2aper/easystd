@@ -11,6 +11,7 @@
 /**
  * @brief Create bad char table for boyer moore search algorithm
  * @note table should be freed after using
+ * @note if F is NULL then func return NULL
  *
  * @param F Cstring
  * @return bad char table

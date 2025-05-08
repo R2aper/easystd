@@ -126,7 +126,7 @@ easy_error string_append(string *str, const char *cstr) {
 }
 
 char string_at(string *str, size_t index, easy_error *err) {
-  if (!str) {
+  if (!str || !str->data) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return '\0';
   }
@@ -144,7 +144,7 @@ char string_at(string *str, size_t index, easy_error *err) {
 const char *string_cstr(const string *str) { return (str && str->data) ? str->data : NULL; }
 
 int string_find(string *str, const char *fragment) {
-  CHECK_NULL_PTR(str);
+  CHECK_NULL_PTR((str && str->data));
   if (!fragment)
     return INVALID_ARGUMENT;
 
@@ -152,7 +152,7 @@ int string_find(string *str, const char *fragment) {
 }
 
 bool string_compare(string *str1, string *str2, easy_error *err) {
-  if (!(str1 && str2)) {
+  if (!str1 || !str1->data || !str2 || !str2->data) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return false;
   }
@@ -203,7 +203,7 @@ easy_error string_clear(string *str) {
 }
 
 easy_error string_shrink_to_fit(string *str) {
-  CHECK_NULL_PTR(str);
+  CHECK_NULL_PTR(str && str->data);
 
   size_t new_capacity = str->length + 1;
 
