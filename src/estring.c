@@ -189,7 +189,7 @@ easy_error string_insert(string *str, size_t pos, const char *cstr) {
 }
 
 easy_error string_clear(string *str) {
-  CHECK_NULL_PTR(str && str->data);
+  CHECK_NULL_PTR((str && str->data));
 
   free(str->data);
   char *new_data = malloc(sizeof(char));
