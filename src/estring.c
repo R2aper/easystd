@@ -211,7 +211,7 @@ easy_error string_shrink_to_fit(string *str) {
     return OK;
 
   char *new_data = realloc(str->data, new_capacity);
-  CHECK_ALLOCATION(str);
+  CHECK_ALLOCATION(new_data);
 
   str->data = new_data;
   str->capacity = new_capacity;
