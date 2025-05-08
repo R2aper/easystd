@@ -7,4 +7,8 @@
  */
 #define TO_TYPE(expression, type) *(type *)expression
 
+// Max and min macros
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
 #endif // GLOBAL_H

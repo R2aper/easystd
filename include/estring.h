@@ -4,8 +4,29 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "eerror.h"
+
+/**
+ * @brief Create bad char table for boyer moore search algorithm
+ * @note table should be freed after using
+ * @note if F is NULL then func return NULL
+ *
+ * @param F Cstring
+ * @return bad char table
+ */
+int *bad_char_table(const char *F);
+
+/**
+ * @brief Implementation of boyer moore search algorithm
+ * @note If F is not in T, then func return -1
+ *
+ * @param T Cstring
+ * @param F subCstring
+ * @return Positon or easy_error code
+ */
+int boyer_moore_search(const char *T, const char *F);
 
 /**
  * @def IS_EMTPY(string)
@@ -28,20 +49,18 @@ typedef struct string {
  * @brief Create emtpy string
  * @note str should be freed after using
  *
- * @param str Pointer to string object
- * @return 0 on success or easy_error
+ * @return Initialized string object
  */
-easy_error string_init_emtpy(string *str);
+string *string_init_emtpy();
 
 /**
  * @brief Create string from Cstring
  * @note str should be freed after using
  *
- * @param str Pointer to string object
  * @param cstr Cstring
- * @return 0 on success or easy_error
+ * @return Initialized string object
  */
-easy_error string_from_cstr(string *str, const char *cstr);
+string *string_from_cstr(const char *cstr);
 
 /**
  * @brief Create string. If cstr is empty, return emtpy string
@@ -49,9 +68,9 @@ easy_error string_from_cstr(string *str, const char *cstr);
  * @note use this function if you sure cstr is not NULL
  *
  * @param cstr Pointer to Cstring
- * @return String object
+ * @return Initialized string object
  */
-string string_create(const char *cstr);
+string *string_create(const char *cstr);
 
 /// @brief Freed string object
 void string_free(string *str);
@@ -93,6 +112,16 @@ char string_at(string *str, size_t index, easy_error *err);
 const char *string_cstr(const string *str);
 
 /**
+ * @brief Find fragment in string and return positon of it
+ *
+ * @param str Pointer to string object
+ * @param fragment Fragment to find in str
+ * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ * @return Position of fragment or -1
+ */
+int string_find(string *str, const char *fragment);
+
+/**
  * @brief Compare two string
  *
  * @param str1,str2 Pointers to string objects
@@ -118,6 +147,14 @@ easy_error string_insert(string *str, size_t pos, const char *cstr);
  * @return 0 on success or easy_error
  */
 easy_error string_clear(string *str);
+
+/**
+ * @brief reduce str->capacity to str->length
+ *
+ * @param str Pointer to string object
+ * @return 0 on success or easy_error
+ */
+easy_error string_shrink_to_fit(string *str);
 
 ///@}
 
