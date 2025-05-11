@@ -1,17 +1,16 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
+#include <stdbool.h>
 #include <stdlib.h>
 
 #include "eerror.h"
 
-/// array is a container that encapsulates fixed size arrays
+/// @brief array is a container that encapsulates fixed size arrays
+/// @note array is not responsible for freeing object it contains. User should free them manualy
 typedef struct array {
   void **data;
   size_t size;
-  size_t capacity;         // Size of allocate elements
-  size_t element_size;     // Size of one element
-  void (*free_fn)(void *); // Free function
 } array;
 
 /// @defgroup Array Functios relative to array type
@@ -21,45 +20,58 @@ typedef struct array {
  * @brief Create container by given capacity
  * @note array should be freed after using
  *
- * @param ar Pointer to array object
- * @param element_size size of data type that will be store
- * @param initial_capacity size of container
- * @param free_fn function that used for freeing elements(if NULL, will be used free())
- * @return 0 on success or easy_error
+ * @param size size of container
+ * @return Initializeid array object
  */
-easy_error array_init(array *ar, size_t element_size, size_t initial_capacity,
-                      void (*free_fn)(void *));
+array *array_init(size_t size);
 
 /// @brief Freed array object
-void array_free(array *ar);
+void array_free(array *arr);
 
-/**
- * Pushes element to container
- *
- * @param ar Pointer to array object
- * @param element Pointer to new element
- * @return 0 on success or easy_error
+// TODO:
+/* easy_error array_fill(array *arr, const void *element, void(*copy_fn)(void*,const void*));
+ * easy_error array_sort(array* arr, compare_fn);
  */
-easy_error array_push(array *ar, const void *element);
 
 /**
- * Returns element by given index
+ * @brief Returns element by given index
  *
- * @param ar Pointer to array object
+ * @param arr Pointer to array object
  * @param index index of element
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
  * @return element of container
  */
-void *array_get(array *ar, size_t index, easy_error *err);
+void *array_get(array *arr, size_t index, easy_error *err);
 
-/**
- * Removes element by given index
+/*
+ * @brief Set element of given index to @value
  *
- * @param Pointer to array object
+ * @param ar Pointer to array object
  * @param index index of element
  * @return 0 on success or easy_error
  */
-easy_error array_remove(array *ar, size_t index);
+easy_error array_set(array *arr, size_t index, void *element);
+
+/**
+ * @def array_get_as(type,arr,index,err)
+ * @brief get element of array as @type
+ *
+ * @param arr Pointer to array object
+ * @param index index of element
+ * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ * @return element of container
+ */
+#define array_get_as(type, arr, index, err) ((type *)array_get((arr), (index), (err)))
+
+/**
+ * @def array_set_as(type,arr,index,value)
+ * @brief set element of given index to @value
+ *
+ * @param ar Pointer to array object
+ * @param index index of element
+ * @return 0 on success or easy_error
+ */
+#define array_set_as(type, arr, index, value) array_set((arr), (index), (void *)(type)(value))
 
 ///@}
 
