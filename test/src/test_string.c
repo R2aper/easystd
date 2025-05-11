@@ -2,10 +2,9 @@
 #include <libestd/estring.h>
 
 #include <check.h>
-#include <stdio.h>
 
 START_TEST(test_bad_char_table) {
-  ck_assert_ptr_eq(bad_char_table(NULL), NULL);
+  ck_assert_ptr_null(bad_char_table(NULL));
 
   int *table = bad_char_table("ABA");
   ck_assert_int_eq(table['A'], 2);
@@ -14,7 +13,6 @@ START_TEST(test_bad_char_table) {
   free(table);
 }
 END_TEST
-
 START_TEST(test_boyer_moore) { ck_assert_int_eq(boyer_moore_search("ABCDE", "CD"), 2); }
 END_TEST
 
@@ -22,7 +20,7 @@ START_TEST(test_string_init) {
   string *str1 = string_init_emtpy();
   ck_assert_str_eq(string_cstr(str1), "");
 
-  ck_assert_ptr_eq(string_from_cstr(NULL), NULL);
+  ck_assert_ptr_null(string_from_cstr(NULL));
 
   string *str2 = string_from_cstr("Hello world");
   ck_assert_str_eq(string_cstr(str2), "Hello world");
