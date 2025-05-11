@@ -61,18 +61,7 @@ easy_error array_set(array *arr, size_t index, void *element);
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
  * @return element of container
  */
-#define array_get_as(type, arr, index, err) ((type *)array_get((arr), (index), (err)))
-
-/**
- * @def array_set_as(type,arr,index,value)
- * @brief set element of given index to @value
- *
- * @param ar Pointer to array object
- * @param index index of element
- * @return 0 on success or easy_error
- */
-#define array_set_as(type, arr, index, value) array_set((arr), (index), (void *)(type)(value))
-
+#define array_get_as(type, arr, index, err) (*(type *)array_get((arr), (index), (err)))
 ///@}
 
 #endif // ARRAY_H
