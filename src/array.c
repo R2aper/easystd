@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,84 +5,56 @@
 #include "array.h"
 #include "eerror.h"
 
-easy_error array_init(array *ar, size_t element_size, size_t initial_capacity,
-                      void (*free_fn)(void *)) {
-  CHECK_NULL_PTR(ar);
+array *array_init(size_t size) {
+  array *arr = (array *)malloc(sizeof(array));
+  arr->data = (void **)calloc(size, sizeof(void *));
 
-  ar->data = malloc(sizeof(void *) * initial_capacity);
-
-  CHECK_ALLOCATION(ar->data);
-
-  ar->size = 0;
-  ar->capacity = initial_capacity;
-  ar->element_size = element_size;
-  ar->free_fn = free_fn;
-
-  return OK;
+  arr->size = size;
+  return arr;
 }
 
-void array_free(array *ar) {
-  for (size_t i = 0; i < ar->size; i++) {
-    if (ar->free_fn)
-      ar->free_fn(ar->data[i]);
-
-    free(ar->data[i]);
-  }
-
-  free(ar->data);
-  ar->data = NULL;
-  ar->size = 0;
-  ar->capacity = 0;
+void array_free(array *arr) {
+  free(arr->data);
+  arr->data = NULL;
+  arr->size = 0;
+  free(arr);
 }
 
-easy_error array_push(array *ar, const void *element) {
-  CHECK_NULL_PTR(ar && ar->data);
-
-  if (!element)
-    return INVALID_ARGUMENT;
-
-  if (ar->size >= ar->capacity)
-    return ARRAY_OVERFLOW;
-
-  void *new_element = malloc(ar->element_size);
-  CHECK_ALLOCATION(new_element);
-
-  memcpy(new_element, element, ar->element_size);
-  ar->data[ar->size++] = new_element;
-
-  return OK;
-}
-
-void *array_get(array *ar, size_t index, easy_error *err) {
-  if (!(ar && ar->data)) {
+void *array_get(array *arr, size_t index, easy_error *err) {
+  if (!(arr && arr->data)) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return NULL;
   }
 
-  if (index >= ar->size) {
+  if (index >= arr->size) {
     SET_CODE_ERROR(err, INVALID_INDEX);
     return NULL;
   }
 
   SET_CODE_ERROR(err, OK);
-
-  return ar->data[index];
+  return arr->data[index];
 }
 
-easy_error array_remove(array *ar, size_t index) {
-  CHECK_NULL_PTR(ar && ar->data);
+easy_error array_set(array *arr, size_t index, void *element) {
+  CHECK_NULL_PTR((arr && arr->data));
 
-  if (index >= ar->size)
+  if (!element)
+    return INVALID_ARGUMENT;
+
+  if (index >= arr->size)
     return INVALID_INDEX;
 
-  if (ar->free_fn)
-    ar->free_fn(ar->data[index]);
-
-  free(ar->data[index]);
-
-  memmove(&ar->data[index], &ar->data[index + 1], (ar->size - index - 1) * sizeof(void *));
-
-  ar->size--;
-
+  arr->data[index] = element;
   return OK;
+}
+
+easy_error array_qsort(array *arr, int(compare_fn)(const void *, const void *)) {
+  CHECK_NULL_PTR((arr && arr->data));
+
+  if (!compare_fn)
+    return INVALID_ARGUMENT;
+
+  qsort(arr->data, arr->size, sizeof(void *), compare_fn);
+
+  return 0;
 }
