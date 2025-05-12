@@ -30,7 +30,6 @@ void array_free(array *arr);
 
 // TODO:
 /* easy_error array_fill(array *arr, const void *element, void(*copy_fn)(void*,const void*));
- * easy_error array_sort(array* arr, compare_fn);
  */
 
 /**
@@ -62,6 +61,9 @@ easy_error array_set(array *arr, size_t index, void *element);
  * @return element of container
  */
 #define array_get_as(type, arr, index, err) (*(type *)array_get((arr), (index), (err)))
+
+easy_error array_qsort(array *arr, int(compare_fn)(const void *, const void *));
+
 ///@}
 
 #endif // ARRAY_H

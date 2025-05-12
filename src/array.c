@@ -47,3 +47,14 @@ easy_error array_set(array *arr, size_t index, void *element) {
   arr->data[index] = element;
   return OK;
 }
+
+easy_error array_qsort(array *arr, int(compare_fn)(const void *, const void *)) {
+  CHECK_NULL_PTR((arr && arr->data));
+
+  if (!compare_fn)
+    return INVALID_ARGUMENT;
+
+  qsort(arr->data, arr->size, sizeof(void *), compare_fn);
+
+  return 0;
+}
