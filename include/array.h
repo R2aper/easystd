@@ -42,7 +42,7 @@ void array_free(array *arr);
  */
 void *array_get(array *arr, size_t index, easy_error *err);
 
-/*
+/**
  * @brief Set element of given index to @value
  *
  * @param ar Pointer to array object
