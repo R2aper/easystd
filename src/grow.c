@@ -5,39 +5,26 @@
 #include "eerror.h"
 #include "grow.h"
 
-easy_error grow_init(grow *gr, size_t element_size, size_t initial_capacity,
-                     void (*free_fn)(void *)) {
-
-  CHECK_NULL_PTR(gr);
-
-  gr->data = malloc(sizeof(void *) * initial_capacity);
-
-  CHECK_ALLOCATION(gr->data);
+grow *grow_init(size_t initial_capacity) {
+  grow *gr = (grow *)malloc(sizeof(grow));
 
   gr->size = 0;
-  gr->capacity = initial_capacity;
-  gr->element_size = element_size;
-  gr->free_fn = free_fn;
+  gr->capacity = (initial_capacity > 0) ? initial_capacity : 16;
+  gr->data = (void **)calloc(initial_capacity, sizeof(void *));
 
-  return OK;
+  return gr;
 }
 
 void grow_free(grow *gr) {
-  for (size_t i = 0; i < gr->size; i++) {
-    if (gr->free_fn)
-      gr->free_fn(gr->data[i]);
-
-    free(gr->data[i]);
-  }
-
   free(gr->data);
   gr->data = NULL;
   gr->size = 0;
   gr->capacity = 0;
+  free(gr);
 }
 
-easy_error grow_push(grow *gr, const void *element) {
-  CHECK_NULL_PTR(gr && gr->data);
+easy_error grow_push(grow *gr, void *element) {
+  CHECK_NULL_PTR((gr && gr->data));
 
   if (!element)
     return INVALID_ARGUMENT;
@@ -48,12 +35,20 @@ easy_error grow_push(grow *gr, const void *element) {
     CHECK_ALLOCATION(gr->data);
   }
 
-  void *new_element = malloc(gr->element_size);
-  CHECK_ALLOCATION(new_element);
+  gr->data[gr->size++] = element;
+  return OK;
+}
 
-  memcpy(new_element, element, gr->element_size);
-  gr->data[gr->size++] = new_element;
+easy_error grow_set(grow *gr, size_t index, void *element) {
+  CHECK_NULL_PTR((gr && gr->data));
 
+  if (!element)
+    return INVALID_ARGUMENT;
+
+  if (index >= gr->size)
+    return INVALID_INDEX;
+
+  gr->data[index] = element;
   return OK;
 }
 
@@ -74,17 +69,13 @@ void *grow_get(grow *gr, size_t index, easy_error *err) {
 }
 
 easy_error grow_remove(grow *gr, size_t index) {
-  CHECK_NULL_PTR(gr && gr->data);
+  CHECK_NULL_PTR((gr && gr->data));
 
   if (index >= gr->size)
     return INVALID_INDEX;
 
-  if (gr->free_fn)
-    gr->free_fn(gr->data[index]);
-
-  free(gr->data[index]);
-
-  memmove(&gr->data[index], &gr->data[index + 1], (gr->size - index - 1) * sizeof(void *));
+  for (size_t i = index; i < gr->size - 1; i++)
+    gr->data[i] = gr->data[i + 1];
 
   gr->size--;
 
