@@ -13,14 +13,14 @@ typedef struct grow {
   size_t capacity; // Size of allocated elements
 } grow;
 
-/// @defgroup Grow Functios relative to grow type
+/// @defgroup Grow Functions relative to grow type
 /// @{
 
 /**
  * @brief Create container by given capacity
  * @note grow should be freed after using
  *
- * @param initial_capacity size of initial capacity of container
+ * @param initial_capacity Size of initial capacity of container
  * @return Initialized grow object
  */
 grow *grow_init(size_t initial_capacity);
@@ -31,7 +31,7 @@ void grow_free(grow *gr);
 /**
  * @brief Pushes element to end of container
  *
- * @param grow Pointer to grow object
+ * @param gr Pointer to grow object
  * @param element Pointer to new element
  * @return 0 on success or easy_error
  */
@@ -47,7 +47,7 @@ easy_error grow_push(grow *gr, void *element);
  */
 easy_error grow_insert(grow *gr, size_t index, void *element);
 
-/*
+/**
  * @brief Set element of given index to @element
  * @warning Use only on allocated elements
  *
@@ -58,29 +58,19 @@ easy_error grow_insert(grow *gr, size_t index, void *element);
  */
 easy_error grow_set(grow *gr, size_t index, void *element);
 
-/*
- * @brief Insert element to given index
- *
- * @param gr Pointer to grow object
- * @param element Pointer to new element
- * @param index Index to insert element
- * @return 0 on success or easy_error
- */
-// easy_error grow_insest(grow *gr, size_t index, void *element);
-
 /**
- * Returns element by given index
+ * @brief Returns element by given index
  *
  * @param gr Pointer to grow object
  * @param index Index of element
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
- * @return Element of container
+ * @return ptr to element of container or NULL
  */
 void *grow_get(grow *gr, size_t index, easy_error *err);
 
-/*
+/**
  * @def grow_get_as(type,gr,index,err)
- * @brief get element of grow as @type
+ * @brief Get element of grow as @type
  *
  * @param gr Pointer to grow object
  * @param index Index of element
