@@ -124,7 +124,7 @@ easy_error grow_shrink_to_fit(grow *gr) {
   if (gr->size == gr->capacity)
     return OK;
 
-  void **new_data = realloc(gr->data, gr->size);
+  void **new_data = realloc(gr->data, gr->size * sizeof(void *));
   CHECK_ALLOCATION(new_data);
 
   gr->data = new_data;
