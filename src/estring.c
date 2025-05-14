@@ -46,7 +46,7 @@ int boyer_moore_search(const char *T, const char *F) {
   return pos;
 }
 
-string *string_init_emtpy() {
+string *string_init_empty() {
   string *str = (string *)malloc(sizeof(string));
 
   str->capacity = 16;
@@ -75,7 +75,7 @@ string *string_from_cstr(const char *cstr) {
 }
 
 string *string_create(const char *cstr) {
-  return (cstr && !cstr[0]) ? string_init_emtpy() : string_from_cstr(cstr);
+  return (cstr && !cstr[0]) ? string_init_empty() : string_from_cstr(cstr);
 }
 
 void string_free(string *str) {

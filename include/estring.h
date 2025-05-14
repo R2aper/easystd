@@ -29,8 +29,8 @@ int *bad_char_table(const char *F);
 int boyer_moore_search(const char *T, const char *F);
 
 /**
- * @def IS_EMTPY(string)
- * @brief Checks if string is emtpy
+ * @def IS_EMPTY(string)
+ * @brief Checks if string is empty
  * @warning Make sure string object is not NULL
  */
 #define IS_EMPTY(string) ((string)->length == 0)
@@ -46,12 +46,12 @@ typedef struct string {
 /// @{
 
 /**
- * @brief Create emtpy string
+ * @brief Create empty string
  * @note str should be freed after using
  *
  * @return Initialized string object
  */
-string *string_init_emtpy();
+string *string_init_empty();
 
 /**
  * @brief Create string from Cstring
@@ -63,7 +63,7 @@ string *string_init_emtpy();
 string *string_from_cstr(const char *cstr);
 
 /**
- * @brief Create string. If cstr is empty, return emtpy string
+ * @brief Create string. If cstr is empty, return empty string
  * @note str should be freed after using
  * @note use this function if you sure cstr is not NULL
  *
