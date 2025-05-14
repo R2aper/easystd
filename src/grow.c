@@ -81,3 +81,14 @@ easy_error grow_remove(grow *gr, size_t index) {
 
   return OK;
 }
+
+easy_error grow_qsort(grow *gr, int(compare_fn)(const void *, const void *)) {
+  CHECK_NULL_PTR((gr && gr->data));
+
+  if (!compare_fn)
+    return INVALID_ARGUMENT;
+
+  qsort(gr->data, gr->size, sizeof(void *), compare_fn);
+
+  return OK;
+}

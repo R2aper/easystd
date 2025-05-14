@@ -88,10 +88,18 @@ void *grow_get(grow *gr, size_t index, easy_error *err);
  */
 easy_error grow_remove(grow *gr, size_t index);
 
+/**
+ * @brief Sorts elements using qsort. Elements compares by @compare_fn
+ *
+ * @param gr Pointer to grow object
+ * @param compare_fn Pointer to compare function
+ * @return 0 on success or easy_error
+ */
+easy_error grow_qsort(grow *gr, int(compare_fn)(const void *, const void *));
+
 /*TODO:
 easy_error grow_resize(grow *gr, size_t new_size);
 easy_error grow_shrink_to_fit(grow *gr);
-easy_error grow_qsort(grow *gr);
 easy_error grow_pop(grow *gr);
 */
 
