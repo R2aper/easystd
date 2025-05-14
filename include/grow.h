@@ -5,11 +5,11 @@
 
 #include "eerror.h"
 
-/// grow is container for simple and secure store any type of data
-/// @note Array is not responsible for freeing object it contains. User should free them manualy
+/// grow is container for simple and secure store of any types of data
+/// @note grow is not responsible for freeing object it contains. User should free them manualy
 typedef struct grow {
   void **data;
-  size_t size;
+  size_t size;     // Size of valid elemets
   size_t capacity; // Size of allocated elements
 } grow;
 

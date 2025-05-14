@@ -10,8 +10,8 @@
 
 /**
  * @brief Create bad char table for boyer moore search algorithm
- * @note table should be freed after using
- * @note if F is NULL then func return NULL
+ * @note Table should be freed after using
+ * @note If F is NULL then fn return NULL
  *
  * @param F Cstring
  * @return bad char table
@@ -20,7 +20,7 @@ int *bad_char_table(const char *F);
 
 /**
  * @brief Implementation of boyer moore search algorithm
- * @note If F is not in T, then func return -1
+ * @note If F is not in T, then fn return -1
  *
  * @param T Cstring
  * @param F subCstring
@@ -80,8 +80,7 @@ void string_free_abs(void *str);
 
 /**
  * @brief Changes the size of the buffer
- *
- * @note if (new_capacity <= str->capacity) then will return OK;
+ * @note If (new_capacity <= str->capacity) then will return OK;
  *
  * @param str Pointer to string object
  * @param new_capacity Size of new buffer
@@ -113,10 +112,10 @@ const char *string_cstr(const string *str);
 
 /**
  * @brief Find fragment in string and return positon of it
+ * @note Use boyer moore algorithm for finding positon
  *
  * @param str Pointer to string object
  * @param fragment Fragment to find in str
- * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
  * @return Position of fragment or -1
  */
 int string_find(string *str, const char *fragment);
@@ -149,7 +148,7 @@ easy_error string_insert(string *str, size_t pos, const char *cstr);
 easy_error string_clear(string *str);
 
 /**
- * @brief reduce str->capacity to str->length
+ * @brief Reduce str->capacity to str->length
  *
  * @param str Pointer to string object
  * @return 0 on success or easy_error

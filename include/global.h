@@ -9,6 +9,7 @@
 
 /**
  * @define DEFINE_COMPARE_FN(name,type,expr)
+ * @note expr must be like: x>y
  * @brief Macros for declaring comparing fn
  */
 #define DEFINE_COMPARE_FN(name, type, expr)                                                        \

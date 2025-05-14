@@ -1,31 +1,30 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-#include <stdbool.h>
 #include <stdlib.h>
 
 #include "eerror.h"
 
 /// @brief array is a container that encapsulates fixed size arrays
-/// @note array is not responsible for freeing object it contains. User should free them manualy
+/// @note array is not responsible for freeing object it contains. User should free them manually
 typedef struct array {
   void **data;
   size_t size;
 } array;
 
-/// @defgroup Array Functios relative to array type
+/// @defgroup Array Functions relative to array type
 /// @{
 
 /**
  * @brief Create container by given capacity
  * @note array should be freed after using
  *
- * @param size size of container
+ * @param size Size of container
  * @return Initializeid array object
  */
 array *array_init(size_t size);
 
-/// @brief Freed array object
+/// @brief Free array object
 void array_free(array *arr);
 
 // TODO:
@@ -36,32 +35,40 @@ void array_free(array *arr);
  * @brief Returns element by given index
  *
  * @param arr Pointer to array object
- * @param index index of element
+ * @param index Index of element
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
- * @return element of container
+ * @return Element of container
  */
 void *array_get(array *arr, size_t index, easy_error *err);
 
 /**
- * @brief Set element of given index to @value
- *
- * @param ar Pointer to array object
- * @param index index of element
- * @return 0 on success or easy_error
- */
-easy_error array_set(array *arr, size_t index, void *element);
-
-/**
  * @def array_get_as(type,arr,index,err)
- * @brief get element of array as @type
+ * @brief Get element of array as @type
  *
  * @param arr Pointer to array object
- * @param index index of element
+ * @param index Index of element
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
  * @return element of container
  */
 #define array_get_as(type, arr, index, err) (*(type *)array_get((arr), (index), (err)))
 
+/**
+ * @brief Set element of given index to @element
+ *
+ * @param arr Pointer to array object
+ * @param index Index of element
+ * @param element Pointer to new_element
+ * @return 0 on success or easy_error
+ */
+easy_error array_set(array *arr, size_t index, void *element);
+
+/**
+ * @brief Sorts elements using qsort. Elements compares by @compare_fn
+ *
+ * @param arr Pointer to array object
+ * @param compare_fn Pointer to compare function
+ * @return 0 on success or easy_error
+ */
 easy_error array_qsort(array *arr, int(compare_fn)(const void *, const void *));
 
 ///@}
