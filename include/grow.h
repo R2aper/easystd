@@ -25,6 +25,12 @@ typedef struct grow {
  */
 grow *grow_init(size_t initial_capacity);
 
+/**
+ * @def grow_init_emtpy
+ * @brief Macros for initializing empty grow container
+ */
+#define grow_init_empty grow_init(0)
+
 /// @brief Freed grow object
 void grow_free(grow *gr);
 
