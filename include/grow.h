@@ -104,13 +104,21 @@ easy_error grow_remove(grow *gr, size_t index);
 easy_error grow_qsort(grow *gr, int(compare_fn)(const void *, const void *));
 
 /**
+ * @brief Changes gr->capacity to @new_capacity
+ *
+ * @param gr Pointer to grow object
+ * @param new_capacity Size of new capacity
+ * @return 0 on success or easy_error
+ */
+easy_error grow_resize(grow *gr, size_t new_capacity);
+
+/**
  * @brief reduce grow->capacity to grow->length
  * @return 0 on success or easy_error
  */
 easy_error grow_shrink_to_fit(grow *gr);
 
 /*TODO:
-easy_error grow_resize(grow *gr, size_t new_size);
 easy_error grow_pop(grow *gr);
 */
 

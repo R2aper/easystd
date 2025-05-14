@@ -119,6 +119,20 @@ easy_error grow_qsort(grow *gr, int(compare_fn)(const void *, const void *)) {
   return OK;
 }
 
+easy_error grow_resize(grow *gr, size_t new_capacity) {
+  CHECK_NULL_PTR((gr && gr->data));
+
+  if (new_capacity <= gr->capacity)
+    return OK;
+
+  void **new_data = realloc(gr->data, new_capacity * sizeof(void *));
+  CHECK_ALLOCATION(new_data);
+
+  gr->capacity = new_capacity;
+
+  return OK;
+}
+
 easy_error grow_shrink_to_fit(grow *gr) {
   CHECK_NULL_PTR((gr && gr->data));
   if (gr->size == gr->capacity)
