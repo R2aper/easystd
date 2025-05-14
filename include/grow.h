@@ -37,6 +37,16 @@ void grow_free(grow *gr);
  */
 easy_error grow_push(grow *gr, void *element);
 
+/**
+ * @brief Insert element to given index
+ *
+ * @param gr Pointer to grow object
+ * @param index Index to push element
+ * @param element Pointer to new element
+ * @return 0 on success or easy_error
+ */
+easy_error grow_insert(grow *gr, size_t index, void *element);
+
 /*
  * @brief Set element of given index to @element
  * @warning Use only on allocated elements

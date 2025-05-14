@@ -39,6 +39,32 @@ easy_error grow_push(grow *gr, void *element) {
   return OK;
 }
 
+easy_error grow_insert(grow *gr, size_t index, void *element) {
+  CHECK_NULL_PTR((gr && gr->data));
+
+  if (!element)
+    return INVALID_ARGUMENT;
+
+  if (index >= gr->size)
+    return INVALID_INDEX;
+
+  if (gr->size + 1 > gr->capacity) {
+    size_t new_capacity = (gr->capacity == 0) ? 1 : gr->capacity * 2;
+    void **new_data = realloc(gr->data, sizeof(void *) * new_capacity);
+    CHECK_ALLOCATION(new_data);
+
+    gr->data = new_data;
+    gr->capacity = new_capacity;
+  }
+
+  memmove(&gr->data[index + 1], &gr->data[index], (gr->size - index) * sizeof(void *));
+
+  gr->data[index] = element;
+  gr->size++;
+
+  return OK;
+}
+
 easy_error grow_set(grow *gr, size_t index, void *element) {
   CHECK_NULL_PTR((gr && gr->data));
 
