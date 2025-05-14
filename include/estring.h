@@ -51,7 +51,7 @@ typedef struct string {
  *
  * @return Initialized string object
  */
-string *string_init_empty();
+string *string_init_empty(void);
 
 /**
  * @brief Create string from Cstring
