@@ -95,6 +95,16 @@ void *grow_get(grow *gr, size_t index, easy_error *err);
 easy_error grow_remove(grow *gr, size_t index);
 
 /**
+ * @def Macros for removing last element
+ * @brief Pop last element of container
+ * @note Ptr to last element assign to NULL
+ *
+ * @param gr Pointer to grow object
+ * @return 0 on success or easy_error
+ */
+#define grow_pop(gr) grow_remove(gr, (gr)->size - 1)
+
+/**
  * @brief Sorts elements using qsort. Elements compares by @compare_fn
  *
  * @param gr Pointer to grow object
@@ -117,10 +127,6 @@ easy_error grow_resize(grow *gr, size_t new_capacity);
  * @return 0 on success or easy_error
  */
 easy_error grow_shrink_to_fit(grow *gr);
-
-/*TODO:
-easy_error grow_pop(grow *gr);
-*/
 
 ///@}
 
