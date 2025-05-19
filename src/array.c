@@ -13,7 +13,7 @@ array *array_init(size_t size) {
   return arr;
 }
 
-void array_free(array *arr) {
+void array_free(array *arr, void(free_fn)(void *)) {
   free(arr->data);
   arr->data = NULL;
   arr->size = 0;

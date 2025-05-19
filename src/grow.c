@@ -10,12 +10,17 @@ grow *grow_init(size_t initial_capacity) {
 
   gr->size = 0;
   gr->capacity = (initial_capacity > 0) ? initial_capacity : 16;
-  gr->data = (void **)calloc(initial_capacity, sizeof(void *));
+  gr->data = (void **)calloc(gr->capacity, sizeof(void *));
 
   return gr;
 }
 
-void grow_free(grow *gr) {
+void grow_free(grow *gr, void(free_fn)(void *)) {
+  if (free_fn) {
+    for (size_t i = 0; i < gr->size; i++)
+
+      free_fn(gr->data[i]);
+  }
   free(gr->data);
   gr->data = NULL;
   gr->size = 0;

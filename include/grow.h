@@ -32,7 +32,8 @@ grow *grow_init(size_t initial_capacity);
 #define grow_init_empty grow_init(0)
 
 /// @brief Freed grow object
-void grow_free(grow *gr);
+/// @param free_fn Pass ptr to free_fn to free elements of container
+void grow_free(grow *gr, void(free_fn)(void *));
 
 /**
  * @brief Pushes element to end of container
@@ -83,7 +84,7 @@ void *grow_get(grow *gr, size_t index, easy_error *err);
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
  * @return Element of container
  */
-#define grow_get_as(type, grow, index, err) (*(type *)grow_get(gr, index, err))
+#define grow_get_as(type, gr, index, err) (*(type *)grow_get(gr, index, err))
 
 /**
  * Removes element by given index
