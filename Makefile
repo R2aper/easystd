@@ -28,8 +28,8 @@ endif
 
 all: create_dir static
 
-static: ${TARGET_STATIC}
-dynamic: ${TARGET_DYNAMIC}
+static: create_dir ${TARGET_STATIC}
+dynamic: create_dir ${TARGET_DYNAMIC}
 
 $(TARGET_STATIC): $(OBJ)
 	ar rcs $(BUILD_DIR)/$@ $^
