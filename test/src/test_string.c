@@ -1,5 +1,5 @@
-#include <libestd/eerror.h>
-#include <libestd/estring.h>
+#include <estd/eerror.h>
+#include <estd/estring.h>
 
 #include <check.h>
 
@@ -17,7 +17,7 @@ START_TEST(test_boyer_moore) { ck_assert_int_eq(boyer_moore_search("ABCDE", "CD"
 END_TEST
 
 START_TEST(test_string_init) {
-  string *str1 = string_init_emtpy();
+  string *str1 = string_init_empty();
   ck_assert_str_eq(string_cstr(str1), "");
 
   ck_assert_ptr_null(string_from_cstr(NULL));

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "eerror.h"
+#include "estd/eerror.h"
 
 /**
  * @brief Create bad char table for boyer moore search algorithm

@@ -1,7 +1,8 @@
-#include <libestd/array.h>
-#include <libestd/eerror.h>
+#include <estd/array.h>
+#include <estd/eerror.h>
 
 #include <check.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -38,7 +39,7 @@ START_TEST(test_array_init) {
 
   ck_assert_int_eq(arr->size, 2);
 
-  array_free(arr);
+  array_free(arr, NULL);
 }
 END_TEST
 
@@ -55,7 +56,7 @@ START_TEST(test_array_set) {
   ck_assert_int_eq(OK, array_set(arr, 0, &a));
   ck_assert_int_eq(5, *(int *)arr->data[0]);
 
-  array_free(arr);
+  array_free(arr, NULL);
 }
 END_TEST
 
@@ -74,7 +75,7 @@ START_TEST(test_array_get) {
   ck_assert_int_eq(array_get_as(int, arr, 0, &err), a);
   ck_assert_int_eq(array_get_as(int, arr, 1, &err), b);
 
-  array_free(arr);
+  array_free(arr, NULL);
 }
 END_TEST
 
@@ -88,7 +89,7 @@ START_TEST(test_array_qsort) {
   array_qsort(arr, int_compare);
   ck_assert_int_eq(is_sort(arr), true);
 
-  array_free(arr);
+  array_free(arr, NULL);
 }
 END_TEST
 

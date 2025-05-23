@@ -1,7 +1,7 @@
 #ifndef EMATH_H
 #define EMATH_H
 
-#include "grow.h"
+#include "estd/grow.h"
 
 // NOTE: Idk why it's so confusing include M_PI and ets, so i just add this:
 #define _E 2.7182818284590452354         /* e */

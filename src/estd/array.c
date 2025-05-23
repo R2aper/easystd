@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "array.h"
-#include "eerror.h"
+#include "estd/array.h"
+#include "estd/eerror.h"
 
 array *array_init(size_t size) {
   array *arr = (array *)malloc(sizeof(array));

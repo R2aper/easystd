@@ -1,5 +1,7 @@
 #include "test_array.c"
+#include "test_grow.c"
 #include "test_string.c"
+
 #include <check.h>
 
 int main() {
@@ -8,6 +10,7 @@ int main() {
 
   srunner_add_suite(sr, string_suit());
   srunner_add_suite(sr, array_suite());
+  srunner_add_suite(sr, grow_suite());
   srunner_run_all(sr, CK_NORMAL);
 
   number_failed = srunner_ntests_failed(sr);

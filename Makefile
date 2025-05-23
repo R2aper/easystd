@@ -10,10 +10,11 @@ SRC_DIR = src
 INC_DIR = include
 BUILD_DIR = build
 OBJ_DIR = obj
+ESTD_DIR = estd
 
 # Src and obj files 
-SRC = $(wildcard $(SRC_DIR)/*.c) # All src/.c files
-OBJ = $(patsubst $(SRC_DIR)/%.c, ${BUILD_DIR}/$(OBJ_DIR)/%.o, $(SRC)) # all .c files changes into .o files
+SRC = $(wildcard $(SRC_DIR)/$(ESTD_DIR)/*.c) # All src/.c files
+OBJ = $(patsubst $(SRC_DIR)/$(ESTD_DIR)/%.c, ${BUILD_DIR}/$(OBJ_DIR)/%.o, $(SRC)) # all .c files changes into .o files
 TARGET_STATIC = libestd.a 
 TARGET_DYNAMIC = libestd.so
 
@@ -39,7 +40,7 @@ $(TARGET_STATIC): $(OBJ)
 $(TARGET_DYNAMIC): $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o ${BUILD_DIR}/$@
 
-${BUILD_DIR}/$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+${BUILD_DIR}/$(OBJ_DIR)/%.o: $(SRC_DIR)/$(ESTD_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 create_dir:
@@ -50,9 +51,11 @@ clean:
 
 install: 
 	install -m 644 ${BUILD_DIR}/libestd* /usr/local/lib/
-	install -d /usr/local/include/libestd/
-	install -m 644 $(INC_DIR)/*.h /usr/local/include/libestd
+	install -d /usr/local/include/$(ESTD_DIR)
+	install -m 644 $(INC_DIR)/$(ESTD_DIR)/*.h /usr/local/include/$(ESTD_DIR)
+	install -m 644 $(INC_DIR)/*.h /usr/local/include
 
 uninstall:
 	rm -rf /usr/local/lib/libestd*
-	rm -rf /usr/local/include/libestd
+	rm -rf /usr/local/include/$(ESTD_DIR)
+	rm -f /usr/local/include/estd.h

@@ -1,8 +1,8 @@
 #include <stdbool.h>
 
-#include "eerror.h"
-#include "grow.h"
-#include "iterator.h"
+#include "estd/eerror.h"
+#include "estd/grow.h"
+#include "estd/iterator.h"
 
 /// @defgroup grow_iterator Functions for grow's iterator
 /// @{

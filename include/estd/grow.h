@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#include "eerror.h"
+#include "estd/eerror.h"
 
 /// grow is container for simple and secure store of any types of data
 /// @note grow is not responsible for freeing object it contains. User should free them manualy

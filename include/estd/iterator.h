@@ -4,9 +4,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "array.h"
-#include "eerror.h"
-#include "grow.h"
+#include "estd/array.h"
+#include "estd/eerror.h"
+#include "estd/grow.h"
 
 /// @def DECLARE_ITERATOR(name,type)
 /// @brief macros for declaring iterator. Use if you want create custom iterator for container
@@ -39,5 +39,9 @@ DECLARE_ITERATOR(grow, grow)
 
 // Declare array_iterator
 DECLARE_ITERATOR(array, array)
+
+#define array_foreach(arr, elem_type, var, err)                                                    \
+  for (size_t _i = 0; _i < (arr)->size && err == 0)                                                \
+    ; i++, var = array_get_as(arr,elem_type,err))
 
 #endif // ITERATOR_H

@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "eerror.h"
-#include "estring.h"
-#include "global.h"
+#include "estd/eerror.h"
+#include "estd/estring.h"
+#include "estd/global.h"
 
 int *bad_char_table(const char *F) {
   if (!F)

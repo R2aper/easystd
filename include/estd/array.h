@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#include "eerror.h"
+#include "estd/eerror.h"
 
 /// @brief array is a container that encapsulates fixed size arrays
 /// @note array is not responsible for freeing object it contains. User should free them manually

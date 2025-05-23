@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Iinclude
-LDFLAGS = -L/usr/local/lib/libestd.a -lestd -lcheck -lm -lpthread # todo
+# -L/usr/local/lib/libestd.a
+LDFLAGS = -lestd -lcheck -lm -lpthread # todo
 TARGET = tests
 
 SRC = src/main.c

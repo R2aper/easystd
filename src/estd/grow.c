@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "eerror.h"
-#include "grow.h"
+#include "estd/eerror.h"
+#include "estd/grow.h"
 
 grow *grow_init(size_t initial_capacity) {
   grow *gr = (grow *)malloc(sizeof(grow));
