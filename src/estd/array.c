@@ -14,6 +14,10 @@ array *array_init(size_t size) {
 }
 
 void array_free(array *arr, void(free_fn)(void *)) {
+  if (free_fn) {
+    for (size_t i = 0; i < arr->size; i++)
+      free_fn(arr->data[i]);
+  }
   free(arr->data);
   arr->data = NULL;
   arr->size = 0;
