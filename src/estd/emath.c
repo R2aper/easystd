@@ -70,3 +70,20 @@ grow *complex_root(complex c, double n) {
 
   return sol;
 }
+
+long long gcd(long long a, long long b) {
+  a = labs(a);
+  b = labs(b);
+  if (b == 0)
+    return a; // GCD(a,0) = |a|
+
+  while (b != 0) {
+    long long r = a % b;
+    a = b;
+    b = r;
+  }
+
+  return a;
+}
+
+long long lcm(long long a, long long b) { return labs(a) * labs(b) / gcd(a, b); }

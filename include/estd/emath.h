@@ -30,11 +30,29 @@ complex complex_plus(complex c1, complex c2);
 complex complex_minus(complex c1, complex c2);
 complex complex_times(complex c1, complex c2);
 complex complex_divide(complex c1, complex c2);
+/// @return Module of complex number
+double complex_module(complex c);
+/// @return Main argument of complex number
+double complex_arg(complex c);
+
 complex complex_pow(complex c, long long n);
 ///@note grow and it's elements, should be freed after using
 ///@return Allocated grow object or NULL
 grow *complex_root(complex c, double n);
-
+complex complex_first_root(complex c, double n);
 ///@}
+
+/// @brief Find gcd of a,b by using Euclid algorithm
+///
+/// @param a First number
+/// @param b Second number
+/// @return GCD of a and b
+long long gcd(long long a, long long b);
+/// @brief Find lcm of a,b using formula: lcm(a,b) = |a|*|b|/gcd(a,b)
+///
+/// @param a First number
+/// @param b Second number
+/// @return LCM of a and b
+long long lcm(long long a, long long b);
 
 #endif // EMATH_H
