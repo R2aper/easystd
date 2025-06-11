@@ -198,12 +198,13 @@ easy_error string_clear(string *str) {
   new_data[0] = '\0';
   str->length = 0;
   str->capacity = 1;
+  str->data = new_data;
 
   return OK;
 }
 
 easy_error string_shrink_to_fit(string *str) {
-  CHECK_NULL_PTR(str && str->data);
+  CHECK_NULL_PTR((str && str->data));
 
   size_t new_capacity = str->length + 1;
 

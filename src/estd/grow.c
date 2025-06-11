@@ -54,7 +54,7 @@ easy_error grow_insert(grow *gr, size_t index, void *element) {
     return INVALID_INDEX;
 
   if (gr->size + 1 > gr->capacity) {
-    size_t new_capacity = (gr->capacity == 0) ? 1 : gr->capacity * 2;
+    size_t new_capacity = (gr->capacity == 0) ? 16 : gr->capacity * 2;
     void **new_data = realloc(gr->data, sizeof(void *) * new_capacity);
     CHECK_ALLOCATION(new_data);
 
@@ -134,6 +134,7 @@ easy_error grow_resize(grow *gr, size_t new_capacity) {
   CHECK_ALLOCATION(new_data);
 
   gr->capacity = new_capacity;
+  gr->data = new_data;
 
   return OK;
 }
