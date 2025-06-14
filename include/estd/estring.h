@@ -127,7 +127,15 @@ int string_find(string *str, const char *fragment);
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
  * @return result of comparing. If one of string is NULL return false
  */
-bool string_compare(string *str1, string *str2, easy_error *err);
+bool string_compare_bool(string *str1, string *str2, easy_error *err);
+
+/**
+ * @brief Compare two string
+ *
+ * @param str1,str2 Pointers to string objects
+ * @return  -1 if str1 < str2, 1 if str1 > str2, 0 if str1 == str2, or a easy_error code
+ */
+int string_compare(const void *str1, const void *str2);
 
 /**
  * @brief Insert Cstring to given positon
@@ -158,3 +166,4 @@ easy_error string_shrink_to_fit(string *str);
 ///@}
 
 #endif // ESTRING_H
+

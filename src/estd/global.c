@@ -1,22 +1,47 @@
 #include "estd/global.h"
 
 int int_compare(const void *a, const void *b) {
-  int arg1 = *(const int *)a;
-  int arg2 = *(const int *)b;
+  void *ptrA = *(void **)a;
+  void *ptrB = *(void **)b;
 
-  return (arg1 > arg2) - (arg1 < arg2);
+  int arg1 = *(int *)ptrA;
+  int arg2 = *(int *)ptrB;
+
+  if (arg1 < arg2)
+    return -1;
+  else if (arg1 > arg2)
+    return 1;
+
+  return 0;
 }
 
 int double_compare(const void *a, const void *b) {
-  double arg1 = *(const double *)a;
-  double arg2 = *(const double *)b;
+  void *ptrA = *(void **)a;
+  void *ptrB = *(void **)b;
 
-  return (arg1 > arg2) - (arg1 < arg2);
+  double arg1 = *(double *)ptrA;
+  double arg2 = *(double *)ptrB;
+
+  if (arg1 < arg2)
+    return -1;
+  else if (arg1 > arg2)
+    return 1;
+
+  return 0;
 }
 
 int char_compare(const void *a, const void *b) {
-  char arg1 = *(const char *)a;
-  char arg2 = *(const char *)b;
+  void *ptrA = *(void **)a;
+  void *ptrB = *(void **)b;
 
-  return (arg1 > arg2) - (arg1 < arg2);
+  char arg1 = *(char *)ptrA;
+  char arg2 = *(char *)ptrB;
+
+  if (arg1 < arg2)
+    return -1;
+  else if (arg1 > arg2)
+    return 1;
+
+  return 0;
 }
+

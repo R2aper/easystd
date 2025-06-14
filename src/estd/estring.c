@@ -151,7 +151,20 @@ int string_find(string *str, const char *fragment) {
   return boyer_moore_search(string_cstr(str), fragment);
 }
 
-bool string_compare(string *str1, string *str2, easy_error *err) {
+int string_compare(const void *str1, const void *str2) {
+  if (!str1 || !str2)
+    return NULL_POINTER;
+
+  void *ptrA = *(void **)str1;
+  void *ptrB = *(void **)str2;
+
+  string *arg1 = *(string **)ptrA;
+  string *arg2 = *(string **)ptrB;
+
+  return strcmp(arg1->data, arg2->data);
+}
+
+bool string_compare_bool(string *str1, string *str2, easy_error *err) {
   if (!str1 || !str1->data || !str2 || !str2->data) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return false;
@@ -219,3 +232,4 @@ easy_error string_shrink_to_fit(string *str) {
 
   return OK;
 }
+
