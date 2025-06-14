@@ -1,11 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -Iinclude
-# -L/usr/local/lib/libestd.a
-LDFLAGS = -lestd -lcheck -lm -lpthread # todo
+LDFLAGS = -lestd -lcheck -lm -lpthread  -lsubunit
 TARGET = tests
 
-SRC = src/main.c
+SRC = $(wildcard $(SRC_DIR)/*.c) # All src/.c files
 SRC_DIR = src
+INCLUDE_DIR = include
 OBJ_DIR = obj
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC)) # all .c files changes into .o files
 

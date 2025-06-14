@@ -1,18 +1,15 @@
+#include <check.h>
 #include <estd/array.h>
 #include <estd/eerror.h>
-
-#include <check.h>
+#include <estd/global.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-int int_compare(const void *a, const void *b) {
-  int *x = *(int **)a;
-  int *y = *(int **)b;
-  return (*x > *y) - (*x < *y);
-}
+#include "test_array.h"
 
-bool is_sort(array *arr) {
+bool is_sort_array(array *arr) {
   for (size_t i = 0; i < arr->size - 1; i++) {
     if (array_get_as(int, arr, i, NULL) > array_get_as(int, arr, i + 1, NULL))
       return false;
@@ -21,15 +18,16 @@ bool is_sort(array *arr) {
   return true;
 }
 
-void fill_rn(array *arr) {
+void fill_rn_array(array *arr) {
   srand(time(0));
-  int value = 0;
   for (size_t i = 0; i < arr->size; i++) {
-    value = rand() % 100;
-    array_set(arr, i, &value);
+    int *value = (int *)malloc(sizeof(int));
+    *value = rand() % 100;
+    array_set(arr, i, value);
   }
 }
 
+// All tests:
 START_TEST(test_array_init) {
   array *arr = array_init(2);
 
@@ -39,7 +37,7 @@ START_TEST(test_array_init) {
 
   ck_assert_int_eq(arr->size, 2);
 
-  array_free(arr, NULL);
+  array_free(arr, free);
 }
 END_TEST
 
@@ -81,13 +79,13 @@ END_TEST
 
 START_TEST(test_array_qsort) {
   array *arr = array_init(10);
-  fill_rn(arr);
+  fill_rn_array(arr);
 
   ck_assert_int_eq(NULL_POINTER, array_qsort(NULL, NULL));
   ck_assert_int_eq(INVALID_ARGUMENT, array_qsort(arr, NULL));
 
   array_qsort(arr, int_compare);
-  ck_assert_int_eq(is_sort(arr), true);
+  ck_assert_int_eq(is_sort_array(arr), true);
 
   array_free(arr, NULL);
 }
@@ -111,3 +109,4 @@ Suite *array_suite() {
 
   return s;
 }
+

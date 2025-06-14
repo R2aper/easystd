@@ -1,8 +1,10 @@
+#include <check.h>
 #include <estd/eerror.h>
 #include <estd/estring.h>
 
-#include <check.h>
+#include "test_estring.h"
 
+// Tests:
 START_TEST(test_bad_char_table) {
   ck_assert_ptr_null(bad_char_table(NULL));
 
@@ -13,6 +15,7 @@ START_TEST(test_bad_char_table) {
   free(table);
 }
 END_TEST
+
 START_TEST(test_boyer_moore) { ck_assert_int_eq(boyer_moore_search("ABCDE", "CD"), 2); }
 END_TEST
 
@@ -92,16 +95,16 @@ START_TEST(test_string_insert) {
 END_TEST
 
 START_TEST(test_string_compare) {
-  ck_assert_int_eq(string_compare(NULL, NULL, NULL), 0);
+  ck_assert_int_eq(string_compare_bool(NULL, NULL, NULL), 0);
 
   easy_error err;
-  ck_assert_int_eq(string_compare(NULL, NULL, &err), 0);
+  ck_assert_int_eq(string_compare_bool(NULL, NULL, &err), 0);
   ck_assert_int_eq(err, NULL_POINTER);
 
   string *str1 = string_create("Foo"), *str2 = string_create("Foo"), *str3 = string_create("Foo2");
 
-  ck_assert_int_eq(string_compare(str1, str2, &err), 1);
-  ck_assert_int_eq(string_compare(str1, str3, &err), 0);
+  ck_assert_int_eq(string_compare_bool(str1, str2, &err), 1);
+  ck_assert_int_eq(string_compare_bool(str1, str3, &err), 0);
   ck_assert_int_eq(err, OK);
 
   string_free(str1);
@@ -165,3 +168,4 @@ Suite *string_suit() {
 
   return s;
 }
+

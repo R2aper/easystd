@@ -4,9 +4,18 @@
 #include <stdbool.h>
 #include <time.h>
 
-DEFINE_COMPARE_FN(_int_compare, int, x > y)
+#include "test_grow.h"
 
-bool _is_sort(grow *gr) {
+void fill_rn_grow(grow *gr, size_t size) {
+  srand(time(0));
+  for (size_t i = 0; i < size; i++) {
+    int *tmp = (int *)malloc(sizeof(int));
+    *tmp = rand() % 100;
+    grow_push(gr, tmp);
+  }
+}
+
+bool is_sort_grow(grow *gr) {
   for (size_t i = 0; i < gr->size - 1; i++) {
     if (grow_get_as(int, gr, i, NULL) > grow_get_as(int, gr, i + 1, NULL))
       return false;
@@ -15,13 +24,7 @@ bool _is_sort(grow *gr) {
   return true;
 }
 
-void fill(grow *gr, size_t size) {
-  srand(time(0));
-  int tmp = 0;
-  for (size_t i = 0; i < size; i++)
-    grow_push(gr, &tmp);
-}
-
+// Tests:
 START_TEST(test_grow_init) {
   grow *gr = grow_init(2);
 
@@ -38,12 +41,12 @@ END_TEST
 
 START_TEST(test_grow_qsort) {
   grow *gr = grow_init(15);
-  fill(gr, 10);
+  fill_rn_grow(gr, 10);
 
-  grow_qsort(gr, _int_compare);
-  ck_assert_int_eq(true, _is_sort(gr));
+  grow_qsort(gr, int_compare);
+  ck_assert_int_eq(true, is_sort_grow(gr));
 
-  grow_free(gr, NULL);
+  grow_free(gr, free);
 }
 END_TEST
 
@@ -99,3 +102,4 @@ Suite *grow_suite() {
 
   return s;
 }
+

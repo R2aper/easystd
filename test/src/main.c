@@ -1,6 +1,6 @@
-#include "test_array.c"
-#include "test_grow.c"
-#include "test_string.c"
+#include "test_array.h"
+#include "test_estring.h"
+#include "test_grow.h"
 
 #include <check.h>
 
@@ -18,3 +18,4 @@ int main() {
 
   return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
+
