@@ -72,8 +72,8 @@ grow *complex_root(complex c, double n) {
 }
 
 long long gcd(long long a, long long b) {
-  a = labs(a);
-  b = labs(b);
+  a = llabs(a);
+  b = llabs(b);
   if (b == 0)
     return a; // GCD(a,0) = |a|
 
@@ -86,4 +86,5 @@ long long gcd(long long a, long long b) {
   return a;
 }
 
-long long lcm(long long a, long long b) { return labs(a) * labs(b) / gcd(a, b); }
+long long lcm(long long a, long long b) { return llabs(a) * llabs(b) / gcd(a, b); }
+
