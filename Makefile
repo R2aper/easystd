@@ -1,4 +1,4 @@
-# Compile and flags 
+# Compiler and flags
 CC = gcc
 CFLAGS = -std=c23 -Wall -Wextra -pedantic -Iinclude -fPIC
 DEBUG_FLAGS = -g
@@ -9,14 +9,23 @@ LDFLAGS = -shared # for dynamic lib
 SRC_DIR = src
 INC_DIR = include
 BUILD_DIR = build
-OBJ_DIR = obj
-ESTD_DIR = estd
+OBJ_DIR = ${BUILD_DIR}/obj
+DEP_DIR = ${BUILD_DIR}/dep
 
-# Src and obj files 
-SRC = $(wildcard $(SRC_DIR)/$(ESTD_DIR)/*.c) # All src/.c files
-OBJ = $(patsubst $(SRC_DIR)/$(ESTD_DIR)/%.c, ${BUILD_DIR}/$(OBJ_DIR)/%.o, $(SRC)) # all .c files changes into .o files
-TARGET_STATIC = libestd.a 
-TARGET_DYNAMIC = libestd.so
+# Path to install
+INSTALL_DIR ?= /usr/local
+INSTALL_DIR_INC = ${INSTALL_DIR}/include
+INSTALL_DIR_LIB = ${INSTALL_DIR}/lib
+
+# Srcs, objs and deps files
+SRC = $(wildcard $(SRC_DIR)/estd/*.c) # All .c files in src/estd
+OBJ = $(patsubst $(SRC_DIR)/estd/%.c, $(OBJ_DIR)/%.o, $(SRC))
+DEP = $(patsubst $(SRC_DIR)/estd/%.c, $(DEP_DIR)/%.d, $(SRC))
+
+# Targets
+TARGET = estd
+TARGET_STATIC = ${BUILD_DIR}/lib${TARGET}.a
+TARGET_DYNAMIC = ${BUILD_DIR}/lib${TARGET}.so
 
 # Mode(Default is debug) 
 ifeq ($(release),1)
@@ -25,37 +34,46 @@ else
     CFLAGS += $(DEBUG_FLAGS)
 endif
 
-.PHONY: all clean install
+.PHONY: all static dynamic install install_static install_dynamic clean
 
-all: create_dir static
+all: static
 
-static: create_dir ${TARGET_STATIC}
-dynamic: create_dir ${TARGET_DYNAMIC}
+static: ${TARGET_STATIC}
+dynamic: ${TARGET_DYNAMIC}
 
-$(TARGET_STATIC): $(OBJ)
-	ar rcs $(BUILD_DIR)/$@ $^
-	ranlib $(BUILD_DIR)/$@   
+${TARGET_STATIC}: ${OBJ}
+	mkdir -p ${@D}
+	ar rcs $@ $^
 
-# For dynamic lib 
-$(TARGET_DYNAMIC): $(OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o ${BUILD_DIR}/$@
+${TARGET_DYNAMIC}: ${OBJ}
+	mkdir -p ${@D}
+	${CC} ${LDFLAGS} -o $@ $^
 
-${BUILD_DIR}/$(OBJ_DIR)/%.o: $(SRC_DIR)/$(ESTD_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/estd/%.c
+	mkdir -p $(@D) $(DEP_DIR)
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@ -MT $@ -MF $(DEP_DIR)/$*.d
 
-create_dir:
-	mkdir -p $(BUILD_DIR)/${OBJ_DIR}
+# include .d files
+-include ${DEP}
 
 clean:
 	rm -rf ${BUILD_DIR} 
 
-install: 
-	install -m 644 ${BUILD_DIR}/libestd* /usr/local/lib/
-	install -d /usr/local/include/$(ESTD_DIR)
-	install -m 644 $(INC_DIR)/$(ESTD_DIR)/*.h /usr/local/include/$(ESTD_DIR)
-	install -m 644 $(INC_DIR)/*.h /usr/local/include
+install: install_static install_dynamic
+
+install_static: ${TARGET_STATIC}
+	install -m 644 ${TARGET_STATIC}  ${INSTALL_DIR_LIB}
+	install -d ${INSTALL_DIR_INC}/estd
+	install -m 644 ${INC_DIR}/estd/*.h ${INSTALL_DIR_INC}/estd
+	install -m 644 ${INC_DIR}/estd.h ${INSTALL_DIR_INC}
+
+install_dynamic: ${TARGET_DYNAMIC}
+	install -m 644 ${TARGET_DYNAMIC}  ${INSTALL_DIR_LIB}
+	install -d ${INSTALL_DIR_INC}/estd
+	install -m 644 ${INC_DIR}/estd/*.h ${INSTALL_DIR_INC}/estd
+	install -m 644 ${INC_DIR}/estd.h ${INSTALL_DIR_INC}
 
 uninstall:
-	rm -rf /usr/local/lib/libestd*
-	rm -rf /usr/local/include/$(ESTD_DIR)
-	rm -f /usr/local/include/estd.h
+	rm -f ${INSTALL_DIR_LIB}/libestd.*
+	rm -f ${INSTALL_DIR_INC}/estd.h
+	rm -rf ${INSTALL_DIR_INC}/estd 

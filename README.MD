@@ -1,4 +1,3 @@
-# easystd
 
 **easystd** is a lightweight C library providing easy-to-use standard data structures, mathematical utilities, and error handling for C projects. It aims to simplify common programming tasks by offering convenient abstractions and container types, while keeping the interface minimal and the implementation efficient.
 
@@ -28,7 +27,7 @@ To build the dynamic library (`libestd.so`):
 make dynamic
 ```
 
-You can also build with optimizations for release:
+You can also build with optimizations for release(compile with `-O3` flag):
 
 ```sh
 make release=1
@@ -36,13 +35,26 @@ make release=1
 
 ### 2. Install (Optional)
 
-To install headers and libraries system-wide (requires `sudo`):
+To install headers and libraries system-wide (requires `sudo`). *This will install both, static and dynamic library*:
 
 ```sh
 sudo make install
 ```
 
+Or explicit tell `make` what to install:
+
+```sh
+sudo make install_static
+sudo make install_dynamic
+```
+
 This installs to `/usr/local/lib` and `/usr/local/include`.
+
+To specife path, use:
+
+```sh
+sudo make install INSTALL_DIR="custom/path"
+```
 
 ### 3. Usage
 
@@ -59,14 +71,14 @@ Or individual headers:
 
 Link your program with the static or dynamic library:
 
-```bash
+```sh
 gcc your_program.c -o your_program -lestd
 ```
 
 Or:
 
-```bash
-gcc -I/path-to-headers -L/path-to-lib -lestd your_program.c -o your_program
+```sh
+gcc -I/path-to-headers -L/path-to-lib your_program.c -o your_program -lestd
 ```
 
 ## Example: Using the String struct
@@ -78,14 +90,14 @@ gcc -I/path-to-headers -L/path-to-lib -lestd your_program.c -o your_program
 int main() {
  string* str = string_create("Foo");
  printf("%s\n",string_cstr(str));
-// Output: Foo
+ // Output: Foo
 
-string_append(str,", Bar");
+ string_append(str,", Bar");
  printf("%s\n",string_cstr(str));
-// Output: Foo, Bar
+ // Output: Foo, Bar
 
-string_free(str);
-return 0;
+ string_free(str);
+ return 0;
 }
 ```
 
@@ -96,15 +108,16 @@ return 0;
 #include <stdio.h>
 
 int main() {
-    array *arr = array_init(10);
-    int value = 42;
-    array_set(arr, 0, &value); // Note: pointer to stack object will die when program reach end of the scope  
-    int result = array_get_as(int, arr, 0, NULL);
+  array *arr = array_init(10);
+  int value = 42;
+  array_set(arr, 0, &value); // Note: pointer to stack object will die when program reach end of the scope  
+  int result = array_get_as(int, arr, 0, NULL);
     
-    printf("Value: %d\n", result);
+  printf("Value: %d\n", result);
+  // Output: 42
     
-    array_free(arr, NULL);
-    return 0;
+  array_free(arr, NULL);
+  return 0;
 }
 ```
 
@@ -153,12 +166,12 @@ To uninstall:
 sudo make uninstall
 ```
 
-
 ## Road map
 
 - `Containers`: list, deque, stack, queue
 - Iterators and macros `foreach`
 - Hash table
+
 ## License
 
 [MIT](LICENSE)
