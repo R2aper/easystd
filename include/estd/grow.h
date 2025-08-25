@@ -1,7 +1,7 @@
 #ifndef GROW_H
 #define GROW_H
 
-#include <stdlib.h>
+#include <stddef.h>
 
 #include "estd/eerror.h"
 
@@ -11,7 +11,12 @@ typedef struct grow {
   void **data;
   size_t size;     // Size of valid elemets
   size_t capacity; // Size of allocated elements
+
 } grow;
+
+#define grow_is_empty(grow) ((grow)->size == 0)
+#define grow_size(grow) (grow)->size
+#define grow_capacity(grow) (grow)->capacity
 
 /// @defgroup Grow Functions relative to grow type
 /// @{

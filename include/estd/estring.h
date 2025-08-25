@@ -1,22 +1,12 @@
 #ifndef ESTRING_H
 #define ESTRING_H
 
+#if __STDC_VERSION__ < 202311L // <C23
 #include <stdbool.h>
+#endif
 #include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "estd/eerror.h"
-
-/**
- * @brief Create bad char table for boyer moore search algorithm
- * @note Table should be freed after using
- * @note If F is NULL then fn return NULL
- *
- * @param F Cstring
- * @return bad char table
- */
-int *bad_char_table(const char *F);
 
 /**
  * @brief Implementation of boyer moore search algorithm
@@ -28,19 +18,24 @@ int *bad_char_table(const char *F);
  */
 int boyer_moore_search(const char *T, const char *F);
 
-/**
- * @def IS_EMPTY(string)
- * @brief Checks if string is empty
- * @warning Make sure string object is not NULL
- */
-#define IS_EMPTY(string) ((string)->length == 0)
-
 /// string is struct for easier usage of strings type
 typedef struct string {
   char *data;
   size_t length;   // Size of string
   size_t capacity; // Size of allocate memory
+
 } string;
+
+// Macros for getting fields of string struct
+#define string_length(string) (string)->length
+#define string_capacity(string) (string)->capacity
+
+/**
+ * @def is_empty(string)
+ * @brief Checks if string is empty
+ * @warning Make sure string object is not NULL
+ */
+#define is_empty(string) ((string)->length == 0)
 
 /// @defgroup String Functions relative to string type
 /// @{
@@ -166,4 +161,3 @@ easy_error string_shrink_to_fit(string *str);
 ///@}
 
 #endif // ESTRING_H
-

@@ -10,7 +10,10 @@
 typedef struct array {
   void **data;
   size_t size;
+
 } array;
+
+#define array_size(arr) (arr)->size
 
 /// @defgroup Array Functions relative to array type
 /// @{
@@ -25,6 +28,7 @@ typedef struct array {
 array *array_init(size_t size);
 
 /// @brief Free array object
+///
 /// @param free_fn Pass ptr to free_fn to free elements of array
 void array_free(array *arr, void(free_fn)(void *));
 

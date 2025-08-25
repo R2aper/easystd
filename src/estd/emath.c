@@ -2,6 +2,7 @@
 #include "estd/grow.h"
 
 #include <math.h>
+#include <stdlib.h>
 
 complex complex_plus(complex c1, complex c2) { return (complex){c1.Re + c2.Re, c1.Im + c2.Im}; }
 complex complex_minus(complex c1, complex c2) { return (complex){c1.Re - c2.Re, c1.Im - c2.Im}; }
@@ -87,4 +88,3 @@ long long gcd(long long a, long long b) {
 }
 
 long long lcm(long long a, long long b) { return llabs(a) * llabs(b) / gcd(a, b); }
-

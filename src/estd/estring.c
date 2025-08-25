@@ -1,12 +1,10 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "estd/eerror.h"
 #include "estd/estring.h"
 #include "estd/global.h"
 
-int *bad_char_table(const char *F) {
+static int *bad_char_table(const char *F) {
   if (!F)
     return NULL;
 
@@ -39,10 +37,11 @@ int boyer_moore_search(const char *T, const char *F) {
       break;
     } else {
       int bad_char_shift = j - bad_char[(unsigned char)T[s + j]];
-      s += MAX(1, bad_char_shift);
+      s += EMAX(1, bad_char_shift);
     }
   }
   free(bad_char);
+
   return pos;
 }
 
@@ -85,7 +84,7 @@ void string_free(string *str) {
   free(str);
 }
 
-void string_free_abs(void *str) { string_free(str); }
+void string_free_abs(void *str) { string_free((string *)str); }
 
 easy_error string_reserve(string *str, size_t new_capacity) {
   CHECK_NULL_PTR((str && str->data));
@@ -171,6 +170,7 @@ bool string_compare_bool(string *str1, string *str2, easy_error *err) {
   }
 
   SET_CODE_ERROR(err, OK);
+
   return strcmp(str1->data, str2->data) == 0;
 }
 
@@ -232,4 +232,3 @@ easy_error string_shrink_to_fit(string *str) {
 
   return OK;
 }
-

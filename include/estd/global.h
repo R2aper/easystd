@@ -34,8 +34,7 @@ int double_compare(const void *a, const void *b);
 int char_compare(const void *a, const void *b);
 
 // Max and min macros
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define EMAX(a, b) ((a) > (b) ? (a) : (b))
+#define EMIN(a, b) ((a) < (b) ? (a) : (b))
 
 #endif // GLOBAL_H
-

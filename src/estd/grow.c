@@ -1,8 +1,6 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "estd/eerror.h"
 #include "estd/grow.h"
 
 grow *grow_init(size_t initial_capacity) {
@@ -41,6 +39,7 @@ easy_error grow_push(grow *gr, void *element) {
   }
 
   gr->data[gr->size++] = element;
+
   return OK;
 }
 
@@ -80,6 +79,7 @@ easy_error grow_set(grow *gr, size_t index, void *element) {
     return INVALID_INDEX;
 
   gr->data[index] = element;
+
   return OK;
 }
 
