@@ -44,7 +44,7 @@ typedef struct string {
  * @brief Create empty string
  * @note str should be freed after using
  *
- * @return Initialized string object
+ * @return Initialized string object or NULL if alocation failed
  */
 string *string_init_empty(void);
 
@@ -53,7 +53,7 @@ string *string_init_empty(void);
  * @note str should be freed after using
  *
  * @param cstr Cstring
- * @return Initialized string object
+ * @return Initialized string object or NULL if alocation failed
  */
 string *string_from_cstr(const char *cstr);
 
@@ -63,7 +63,7 @@ string *string_from_cstr(const char *cstr);
  * @note use this function if you sure cstr is not NULL
  *
  * @param cstr Pointer to Cstring
- * @return Initialized string object
+ * @return Initialized string object or NULL if alocation failed
  */
 string *string_create(const char *cstr);
 
@@ -91,6 +91,15 @@ easy_error string_reserve(string *str, size_t new_capacity);
  * @return 0 on success or easy_error
  */
 easy_error string_append(string *str, const char *cstr);
+
+/**
+ * @brief Add char to end of str
+ *
+ * @param str Pointer to string object
+ * @param ch Character
+ * @return 0 on success or easy_error
+ */
+easy_error string_appendc(string *str, const char ch);
 
 /**
  * @brief Get char by index

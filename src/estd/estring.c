@@ -9,6 +9,9 @@ static int *bad_char_table(const char *F) {
     return NULL;
 
   int *table = (int *)malloc(256 * sizeof(int)); // 256 for everu ASCII char
+  if (!table)
+    return NULL;
+
   for (size_t i = 0; i < 256; i++)
     table[i] = -1;
 
@@ -27,6 +30,9 @@ int boyer_moore_search(const char *T, const char *F) {
   int pos = -1;
 
   int *bad_char = bad_char_table(F);
+  if (!bad_char)
+    return ALLOCATION_FAILED;
+
   size_t s = 0;
   while (s <= n - m) {
     int j = m - 1;
@@ -47,10 +53,16 @@ int boyer_moore_search(const char *T, const char *F) {
 
 string *string_init_empty() {
   string *str = (string *)malloc(sizeof(string));
+  if (!str)
+    return NULL;
 
   str->capacity = 16;
   str->length = 0;
   str->data = malloc(str->capacity);
+  if (!str->data) {
+    free(str);
+    return NULL;
+  }
 
   str->data[0] = '\0';
 
@@ -62,11 +74,17 @@ string *string_from_cstr(const char *cstr) {
     return NULL;
 
   string *str = (string *)malloc(sizeof(string));
+  if (!str)
+    return NULL;
 
   size_t len = strlen(cstr);
   str->length = len;
   str->capacity = len + 1;
   str->data = malloc(str->capacity);
+  if (!str->data) {
+    free(str);
+    return NULL;
+  }
 
   memcpy(str->data, cstr, str->capacity);
 
@@ -82,6 +100,7 @@ void string_free(string *str) {
   str->data = NULL;
   str->length = str->capacity = 0;
   free(str);
+  str = NULL;
 }
 
 void string_free_abs(void *str) { string_free((string *)str); }
@@ -114,12 +133,29 @@ easy_error string_append(string *str, const char *cstr) {
     size_t new_capacity = (new_length + 1) * 2;
 
     easy_error err = string_reserve(str, new_capacity);
-    if (err != 0)
+    if (err != OK)
       return err;
   }
 
   memcpy(str->data + str->length, cstr, cstr_len + 1);
   str->length = new_length;
+
+  return OK;
+}
+
+easy_error string_appendc(string *str, const char ch) {
+  CHECK_NULL_PTR((str && str->data));
+
+  if (str->length + 2 > str->capacity) {
+    size_t new_capacity = (str->length + 2) * 2;
+    easy_error err = string_reserve(str, new_capacity);
+    if (err != OK)
+      return err;
+  }
+
+  str->data[str->length] = ch;
+  str->length++;
+  str->data[str->length] = '\0';
 
   return OK;
 }
