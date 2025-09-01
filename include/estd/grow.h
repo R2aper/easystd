@@ -14,9 +14,10 @@ typedef struct grow {
 
 } grow;
 
-#define grow_is_empty(grow) ((grow)->size == 0)
 #define grow_size(grow) (grow)->size
 #define grow_capacity(grow) (grow)->capacity
+
+#define grow_is_empty(grow) ((grow)->size == 0)
 
 /// @defgroup Grow Functions relative to grow type
 /// @{
@@ -38,7 +39,11 @@ grow *grow_init(size_t initial_capacity);
 
 /// @brief Freed grow object
 /// @param free_fn Pass ptr to free_fn to free elements of container
-void grow_free(grow *gr, void(free_fn)(void *));
+void grow_free_(grow *gr, void(free_fn)(void *));
+
+#define grow_free(gr, free_fn)                                                                     \
+  grow_free_((gr), (free_fn));                                                                     \
+  (gr) = NULL
 
 /**
  * @brief Pushes element to end of container

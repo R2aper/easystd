@@ -30,7 +30,11 @@ array *array_init(size_t size);
 /// @brief Free array object
 ///
 /// @param free_fn Pass ptr to free_fn to free elements of array
-void array_free(array *arr, void(free_fn)(void *));
+void array_free_(array *arr, void(free_fn)(void *));
+
+#define array_free(arr, free_fn)                                                                   \
+  array_free_((arr), (free_fn));                                                                   \
+  (arr) = NULL
 
 // TODO:
 /* easy_error array_fill(array *arr, const void *element, void(*copy_fn)(void*,const void*));

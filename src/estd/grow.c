@@ -13,7 +13,7 @@ grow *grow_init(size_t initial_capacity) {
   return gr;
 }
 
-void grow_free(grow *gr, void(free_fn)(void *)) {
+void grow_free_(grow *gr, void(free_fn)(void *)) {
   if (free_fn) {
     for (size_t i = 0; i < gr->size; i++)
 

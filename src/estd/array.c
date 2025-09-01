@@ -1,4 +1,3 @@
-
 #include "estd/array.h"
 
 array *array_init(size_t size) {
@@ -10,7 +9,7 @@ array *array_init(size_t size) {
   return arr;
 }
 
-void array_free(array *arr, void(free_fn)(void *)) {
+void array_free_(array *arr, void(free_fn)(void *)) {
   if (free_fn) {
     for (size_t i = 0; i < arr->size; i++)
       free_fn(arr->data[i]);

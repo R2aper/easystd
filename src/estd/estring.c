@@ -95,15 +95,12 @@ string *string_create(const char *cstr) {
   return (cstr && !cstr[0]) ? string_init_empty() : string_from_cstr(cstr);
 }
 
-void string_free(string *str) {
+void string_free_(string *str) {
   free(str->data);
   str->data = NULL;
   str->length = str->capacity = 0;
   free(str);
-  str = NULL;
 }
-
-void string_free_abs(void *str) { string_free((string *)str); }
 
 easy_error string_reserve(string *str, size_t new_capacity) {
   CHECK_NULL_PTR((str && str->data));

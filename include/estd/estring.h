@@ -68,10 +68,11 @@ string *string_from_cstr(const char *cstr);
 string *string_create(const char *cstr);
 
 /// @brief Freed string object
-void string_free(string *str);
+void string_free_(string *str);
 
-/// @brief Same as string_free, just with void* argument
-void string_free_abs(void *str);
+#define string_free(str)                                                                           \
+  string_free_(str);                                                                               \
+  (str) = NULL
 
 /**
  * @brief Changes the size of the buffer
