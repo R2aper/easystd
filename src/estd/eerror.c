@@ -12,10 +12,19 @@ const char *easy_error_message(easy_error err) {
     return "Null pointer";
   case INVALID_ARGUMENT:
     return "Invalid argument";
-  case INVALID_ITERATOR:
-    return "Invalid iterator";
-  case ARRAY_OVERFLOW:
-    return "Trying pushing element into full array";
+  case FILE_INVALID_MODE:
+    return "Invalid mode of opening file";
+  case FILE_OPEN_ERROR:
+    return "Error of opening file, check perror";
+  case FILE_SEEK_ERROR:
+    return "Error of setting position, check perror";
+  case FILE_TELL_ERROR:
+    return "Error of getting position, check perror";
+  case FILE_WRITE_FAILED:
+    return "Error while writing into file, check perror";
+  case FILE_READ_FAILED:
+    return "Error while reading from file, check perror";
+
   default:
     return "Unknown error";
   }

@@ -23,8 +23,13 @@ typedef enum {
   INVALID_INDEX = -2,
   NULL_POINTER = -3,
   INVALID_ARGUMENT = -4,
-  INVALID_ITERATOR = -5,
-  ARRAY_OVERFLOW = -6,
+  FILE_INVALID_MODE = -5,
+  FILE_OPEN_ERROR = -6,
+  FILE_SEEK_ERROR = -7,
+  FILE_TELL_ERROR = -8,
+  FILE_WRITE_FAILED = -9,
+  FILE_READ_FAILED = -10
+
 } easy_error;
 
 /// @brief return text of error
