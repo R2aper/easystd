@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -std=c23 -Wall -Wextra -pedantic -Iinclude -fPIC
+CFLAGS = -std=c23 -Wall -Wextra -pedantic -Iinclude -fPIC -lm
 DEBUG_FLAGS = -g
 RELEASE_FLAGS = -O3
 LDFLAGS = -shared # for dynamic lib
