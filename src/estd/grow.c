@@ -99,14 +99,17 @@ void *grow_get(grow *gr, size_t index, easy_error *err) {
   return gr->data[index];
 }
 
-easy_error grow_remove(grow *gr, size_t index) {
+easy_error grow_remove(grow *gr, size_t index, void(free_fn)(void *)) {
   CHECK_NULL_PTR((gr && gr->data));
 
   if (index >= gr->size)
     return INVALID_INDEX;
 
-  for (size_t i = index; i < gr->size - 1; i++)
-    gr->data[i] = gr->data[i + 1];
+  if (free_fn)
+    free_fn(gr->data[index]);
+
+  if (index < gr->size - 1)
+    memmove(&gr->data[index], &gr->data[index + 1], (gr->size - index - 1) * sizeof(void *));
 
   gr->size--;
 

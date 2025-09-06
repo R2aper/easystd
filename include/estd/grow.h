@@ -101,19 +101,19 @@ void *grow_get(grow *gr, size_t index, easy_error *err);
  *
  * @param gr Pointer to grow object
  * @param index Index of element
+ * @param free_fn Function to free the removed element. Can be NULL.
  * @return 0 on success or easy_error
  */
-easy_error grow_remove(grow *gr, size_t index);
+easy_error grow_remove(grow *gr, size_t index, void(free_fn)(void *));
 
 /**
  * @def Macros for removing last element
  * @brief Pop last element of container
- * @note Ptr to last element assign to NULL
  *
  * @param gr Pointer to grow object
  * @return 0 on success or easy_error
  */
-#define grow_pop(gr) grow_remove(gr, (gr)->size - 1)
+#define grow_pop(gr, free_fn) grow_remove(gr, (gr)->size - 1, (free_fn))
 
 /**
  * @brief Sorts elements using qsort. Elements compares by @compare_fn
