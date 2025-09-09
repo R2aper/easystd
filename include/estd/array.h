@@ -48,7 +48,7 @@ void array_free_(array *arr, void(free_fn)(void *));
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
  * @return Element of container
  */
-void *array_get(array *arr, size_t index, easy_error *err);
+void *array_get(const array *arr, size_t index, easy_error *err);
 
 /**
  * @def array_get_as(type,arr,index,err)

@@ -83,7 +83,7 @@ easy_error grow_set(grow *gr, size_t index, void *element);
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
  * @return ptr to element of container or NULL
  */
-void *grow_get(grow *gr, size_t index, easy_error *err);
+void *grow_get(const grow *gr, size_t index, easy_error *err);
 
 /**
  * @def grow_get_as(type,gr,index,err)

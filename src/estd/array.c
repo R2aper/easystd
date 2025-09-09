@@ -20,7 +20,7 @@ void array_free_(array *arr, void(free_fn)(void *)) {
   free(arr);
 }
 
-void *array_get(array *arr, size_t index, easy_error *err) {
+void *array_get(const array *arr, size_t index, easy_error *err) {
   if (!(arr && arr->data)) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return NULL;

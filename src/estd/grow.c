@@ -83,7 +83,7 @@ easy_error grow_set(grow *gr, size_t index, void *element) {
   return OK;
 }
 
-void *grow_get(grow *gr, size_t index, easy_error *err) {
+void *grow_get(const grow *gr, size_t index, easy_error *err) {
   if (!(gr && gr->data)) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return NULL;

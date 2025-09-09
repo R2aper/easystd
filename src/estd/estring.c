@@ -157,7 +157,7 @@ easy_error string_appendc(string *str, const char ch) {
   return OK;
 }
 
-char string_at(string *str, size_t index, easy_error *err) {
+char string_at(const string *str, size_t index, easy_error *err) {
   if (!str || !str->data) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return '\0';
@@ -175,7 +175,7 @@ char string_at(string *str, size_t index, easy_error *err) {
 
 const char *string_cstr(const string *str) { return (str && str->data) ? str->data : NULL; }
 
-int string_find(string *str, const char *fragment) {
+int string_find(const string *str, const char *fragment) {
   CHECK_NULL_PTR((str && str->data));
   if (!fragment)
     return INVALID_ARGUMENT;
@@ -196,7 +196,7 @@ int string_compare(const void *str1, const void *str2) {
   return strcmp(arg1->data, arg2->data);
 }
 
-bool string_compare_bool(string *str1, string *str2, easy_error *err) {
+bool string_compare_bool(const string *str1, const string *str2, easy_error *err) {
   if (!str1 || !str1->data || !str2 || !str2->data) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return false;
