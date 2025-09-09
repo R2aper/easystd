@@ -48,9 +48,13 @@ typedef struct freader {
 #define file_seek(io, offset, origin) fseek((io->fp), (offset), (origin));
 #define file_rewind(io) rewind((io)->fp)
 
+#define file_getc(reader) fgetc((reader)->fp)
+#define file_putc(ch, writer) fputc(ch, (writer)->fp)
+
 #define file_has_error(io) (ferror((io)->fp) != 0)
 #define file_clear_error(io) clearerr((io)->fp)
 
+// TODO: error_msg
 #define file_perror(msg, io)                                                                       \
   if (ferror((io)->fp))                                                                            \
     perror(msg);
