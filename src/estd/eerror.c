@@ -1,5 +1,7 @@
 #include "estd/eerror.h"
 
+#include <stdio.h>
+
 const char *easy_error_message(easy_error err) {
   switch (err) {
   case OK:
@@ -24,6 +26,14 @@ const char *easy_error_message(easy_error err) {
     return "Error while writing into file, check perror";
   case FILE_READ_FAILED:
     return "Error while reading from file, check perror";
+  case PARSER_UNKOWN_ARGUMENT:
+    return "Get Unknown argument";
+  case PARSER_NO_REQUIRED_PARAMETR:
+    return "Expected parametr after argument";
+  case PARSER_NO_PASSED_PARAMETRS:
+    return "Expected at least one paramentr after argument";
+  case PARSER_UNEXPECTED_VALUE:
+    return "Parser:Unexpected value";
 
   default:
     return "Unknown error";
