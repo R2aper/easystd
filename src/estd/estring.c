@@ -58,7 +58,7 @@ string *string_init_empty() {
 
   str->capacity = 16;
   str->length = 0;
-  str->data = malloc(str->capacity);
+  str->data = (char *)malloc(str->capacity);
   if (!str->data) {
     free(str);
     return NULL;
@@ -80,7 +80,7 @@ string *string_from_cstr(const char *cstr) {
   size_t len = strlen(cstr);
   str->length = len;
   str->capacity = len + 1;
-  str->data = malloc(str->capacity);
+  str->data = (char *)malloc(str->capacity);
   if (!str->data) {
     free(str);
     return NULL;
@@ -108,7 +108,7 @@ easy_error string_reserve(string *str, size_t new_capacity) {
   if (new_capacity <= str->capacity)
     return OK;
 
-  char *new_data = realloc(str->data, new_capacity);
+  char *new_data = (char *)realloc(str->data, new_capacity);
   CHECK_ALLOCATION(new_data);
 
   str->data = new_data;
@@ -238,7 +238,7 @@ easy_error string_clear(string *str) {
   CHECK_NULL_PTR((str && str->data));
 
   free(str->data);
-  char *new_data = malloc(sizeof(char));
+  char *new_data = (char *)malloc(sizeof(char));
   CHECK_ALLOCATION(new_data);
 
   new_data[0] = '\0';
@@ -257,7 +257,7 @@ easy_error string_shrink_to_fit(string *str) {
   if (str->capacity == new_capacity)
     return OK;
 
-  char *new_data = realloc(str->data, new_capacity);
+  char *new_data = (char *)realloc(str->data, new_capacity);
   CHECK_ALLOCATION(new_data);
 
   str->data = new_data;

@@ -320,7 +320,7 @@ string *read_file(freader *reader, easy_error *err) {
     return NULL;
   }
 
-  text->data = malloc(filesize + 1); // +1 for '\0'
+  text->data = (char *)malloc(filesize + 1); // +1 for '\0'
   if (!text->data) {
     free(text);
     SET_CODE_ERROR(err, ALLOCATION_FAILED);

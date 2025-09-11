@@ -34,7 +34,7 @@ easy_error grow_push(grow *gr, void *element) {
 
   if (gr->size >= gr->capacity) {
     gr->capacity *= 2;
-    gr->data = realloc(gr->data, sizeof(void *) * gr->capacity);
+    gr->data = (void **)realloc(gr->data, sizeof(void *) * gr->capacity);
     CHECK_ALLOCATION(gr->data);
   }
 
@@ -54,7 +54,7 @@ easy_error grow_insert(grow *gr, size_t index, void *element) {
 
   if (gr->size + 1 > gr->capacity) {
     size_t new_capacity = (gr->capacity == 0) ? 16 : gr->capacity * 2;
-    void **new_data = realloc(gr->data, sizeof(void *) * new_capacity);
+    void **new_data = (void **)realloc(gr->data, sizeof(void *) * new_capacity);
     CHECK_ALLOCATION(new_data);
 
     gr->data = new_data;
@@ -133,7 +133,7 @@ easy_error grow_resize(grow *gr, size_t new_capacity) {
   if (new_capacity <= gr->capacity)
     return OK;
 
-  void **new_data = realloc(gr->data, new_capacity * sizeof(void *));
+  void **new_data = (void **)realloc(gr->data, new_capacity * sizeof(void *));
   CHECK_ALLOCATION(new_data);
 
   gr->capacity = new_capacity;
@@ -147,7 +147,7 @@ easy_error grow_shrink_to_fit(grow *gr) {
   if (gr->size == gr->capacity)
     return OK;
 
-  void **new_data = realloc(gr->data, gr->size * sizeof(void *));
+  void **new_data = (void **)realloc(gr->data, gr->size * sizeof(void *));
   CHECK_ALLOCATION(new_data);
 
   gr->data = new_data;
