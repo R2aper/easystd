@@ -32,8 +32,6 @@ const char *easy_error_message(easy_error err) {
     return "Expected parametr after argument";
   case PARSER_NO_PASSED_PARAMETRS:
     return "Expected at least one paramentr after argument";
-  case PARSER_UNEXPECTED_VALUE:
-    return "Parser:Unexpected value";
 
   default:
     return "Unknown error";

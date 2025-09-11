@@ -10,6 +10,7 @@ typedef enum { FLAG, SINGLE_OPTION, MULTIPLE_OPTION } arg_type;
 typedef struct cmd_parser {
   // TODO: Maybe should use hash table?
   grow *args;        // cmd_arg*
+  grow *pos_args;    // string*
   string *arg_error; // If error appears, it would be invalid arg
 
 } cmd_parser;
@@ -88,6 +89,17 @@ const string *cmd_get_value(cmd_parser *p, const char *name, easy_error *err);
  * the option was not set or an error occurred.
  */
 const grow *cmd_get_values(cmd_parser *p, const char *name, easy_error *err);
+
+/**
+ * @brief Gets the positionals args.
+ *
+ * @param p A pointer to the cmd_parser.
+ * @param err A pointer to an easy_error variable to store any error that occurs.
+ *
+ * @return A pointer to a growable array of strings containing the positionals args, or NULL if
+ * error accured.
+ */
+const grow *cmd_get_pos_args(cmd_parser *p, easy_error *err);
 
 /*
 #ifdef DEBUG
