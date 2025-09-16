@@ -23,6 +23,7 @@ typedef struct array {
  * @note array should be freed after using
  *
  * @param size Size of container
+ *
  * @return Initializeid array object
  */
 array *array_init(size_t size);
@@ -46,6 +47,7 @@ void array_free_(array *arr, void(free_fn)(void *));
  * @param arr Pointer to array object
  * @param index Index of element
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return Element of container
  */
 void *array_get(const array *arr, size_t index, easy_error *err);
@@ -57,6 +59,7 @@ void *array_get(const array *arr, size_t index, easy_error *err);
  * @param arr Pointer to array object
  * @param index Index of element
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return element of container
  */
 #define array_get_as(type, arr, index, err) (*(type *)array_get((arr), (index), (err)))
@@ -67,6 +70,7 @@ void *array_get(const array *arr, size_t index, easy_error *err);
  * @param arr Pointer to array object
  * @param index Index of element
  * @param element Pointer to new_element
+ *
  * @return 0 on success or easy_error
  */
 easy_error array_set(array *arr, size_t index, void *element);
@@ -76,6 +80,7 @@ easy_error array_set(array *arr, size_t index, void *element);
  *
  * @param arr Pointer to array object
  * @param compare_fn Pointer to compare function
+ *
  * @return 0 on success or easy_error
  */
 easy_error array_qsort(array *arr, int(compare_fn)(const void *, const void *));

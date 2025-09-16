@@ -27,6 +27,7 @@ typedef struct grow {
  * @note grow should be freed after using
  *
  * @param initial_capacity Size of initial capacity of container
+ *
  * @return Initialized grow object
  */
 grow *grow_init(size_t initial_capacity);
@@ -50,6 +51,7 @@ void grow_free_(grow *gr, void(free_fn)(void *));
  *
  * @param gr Pointer to grow object
  * @param element Pointer to new element
+ *
  * @return 0 on success or easy_error
  */
 easy_error grow_push(grow *gr, void *element);
@@ -60,6 +62,7 @@ easy_error grow_push(grow *gr, void *element);
  * @param gr Pointer to grow object
  * @param index Index to push element
  * @param element Pointer to new element
+ *
  * @return 0 on success or easy_error
  */
 easy_error grow_insert(grow *gr, size_t index, void *element);
@@ -71,6 +74,7 @@ easy_error grow_insert(grow *gr, size_t index, void *element);
  * @param gr Pointer to grow object
  * @param index Index of element
  * @param element Pointer to new element
+ *
  * @return 0 on success or easy_error
  */
 easy_error grow_set(grow *gr, size_t index, void *element);
@@ -81,6 +85,7 @@ easy_error grow_set(grow *gr, size_t index, void *element);
  * @param gr Pointer to grow object
  * @param index Index of element
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return ptr to element of container or NULL
  */
 void *grow_get(const grow *gr, size_t index, easy_error *err);
@@ -92,6 +97,7 @@ void *grow_get(const grow *gr, size_t index, easy_error *err);
  * @param gr Pointer to grow object
  * @param index Index of element
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return Element of container
  */
 #define grow_get_as(type, gr, index, err) (*(type *)grow_get(gr, index, err))
@@ -102,6 +108,7 @@ void *grow_get(const grow *gr, size_t index, easy_error *err);
  * @param gr Pointer to grow object
  * @param index Index of element
  * @param free_fn Function to free the removed element. Can be NULL.
+ *
  * @return 0 on success or easy_error
  */
 easy_error grow_remove(grow *gr, size_t index, void(free_fn)(void *));
@@ -111,6 +118,7 @@ easy_error grow_remove(grow *gr, size_t index, void(free_fn)(void *));
  * @brief Pop last element of container
  *
  * @param gr Pointer to grow object
+ *
  * @return 0 on success or easy_error
  */
 #define grow_pop(gr, free_fn) grow_remove(gr, (gr)->size - 1, (free_fn))
@@ -120,6 +128,7 @@ easy_error grow_remove(grow *gr, size_t index, void(free_fn)(void *));
  *
  * @param gr Pointer to grow object
  * @param compare_fn Pointer to compare function
+ *
  * @return 0 on success or easy_error
  */
 easy_error grow_qsort(grow *gr, int(compare_fn)(const void *, const void *));
@@ -129,12 +138,14 @@ easy_error grow_qsort(grow *gr, int(compare_fn)(const void *, const void *));
  *
  * @param gr Pointer to grow object
  * @param new_capacity Size of new capacity
+ *
  * @return 0 on success or easy_error
  */
 easy_error grow_resize(grow *gr, size_t new_capacity);
 
 /**
  * @brief reduce grow->capacity to grow->length
+ *
  * @return 0 on success or easy_error
  */
 easy_error grow_shrink_to_fit(grow *gr);

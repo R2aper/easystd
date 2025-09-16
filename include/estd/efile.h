@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <sys/stat.h>
 
 #include "estd/eerror.h"
 #include "estd/estring.h"
@@ -27,7 +28,9 @@ typedef enum FILE_MODE {
 typedef struct fwriter {
   FILE *fp;
   FILE_MODE mode;
+  string *path;
   int64_t pos;
+  size_t file_size;
 
 } fwriter;
 
@@ -66,6 +69,7 @@ typedef struct freader {
  * @param filename Path to file
  * @param mode File opening mode
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return Pointer to opened file
  */
 freader *openr(const char *filename, FILE_MODE mode, easy_error *err);
@@ -77,6 +81,7 @@ freader *openr(const char *filename, FILE_MODE mode, easy_error *err);
  * @param filename Path to file
  * @param mode File opening mode
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return Pointer to opened file
  */
 fwriter *openw(const char *filename, FILE_MODE mode, easy_error *err);
@@ -85,6 +90,7 @@ fwriter *openw(const char *filename, FILE_MODE mode, easy_error *err);
  * @brief Close file
  *
  * @param reader Pointer to opened file
+ *
  * @return 0 on success or easy_error
  */
 easy_error closer(freader *reader);
@@ -93,6 +99,7 @@ easy_error closer(freader *reader);
  * @brief Close file
  *
  * @param writer Pointer to opened file
+ *
  * @return 0 on success or easy_error
  */
 easy_error closew(fwriter *writer);
@@ -105,6 +112,7 @@ easy_error closew(fwriter *writer);
  * @param size Size of each element
  * @param count Number of elements to be written
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return Size of objects written successfully
  */
 size_t write_bytes(fwriter *writer, const void *data, size_t size, size_t count, easy_error *err);
@@ -113,6 +121,7 @@ size_t write_bytes(fwriter *writer, const void *data, size_t size, size_t count,
  * @brief Formatted writing into opened file
  *
  * @param writer Pointer to opened file
+ *
  * @return Number of writed arguments or easy_error
  */
 int writef(fwriter *writer, const char *format, ...);
@@ -125,6 +134,7 @@ int writef(fwriter *writer, const char *format, ...);
  * @param size Size of each element in bytes
  * @param count Count of elements to be read
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return Size of objects readed successfully
  */
 size_t read_bytes(freader *reader, void *buffer, size_t size, size_t count, easy_error *err);
@@ -133,6 +143,7 @@ size_t read_bytes(freader *reader, void *buffer, size_t size, size_t count, easy
  * @brief Formatted reading from opened file
  *
  * @param reader Pointer to opened file
+ *
  * @return Number of readed arguments or easy_error
  */
 int readf(freader *reader, const char *format, ...);
@@ -141,6 +152,7 @@ int readf(freader *reader, const char *format, ...);
  * @brief Read characters in file until new line
  *
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return Initialized string object
  */
 string *read_line(freader *reader, easy_error *err);
@@ -149,6 +161,7 @@ string *read_line(freader *reader, easy_error *err);
  * @brief Read while content of file
  *
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
+ *
  * @return Initialized string object
  */
 string *read_file(freader *reader, easy_error *err);
