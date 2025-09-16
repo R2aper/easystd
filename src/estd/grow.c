@@ -1,14 +1,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "estd/eerror.h"
 #include "estd/grow.h"
 
 grow *grow_init(size_t initial_capacity) {
   grow *gr = (grow *)malloc(sizeof(grow));
+  if (!gr)
+    return NULL;
 
   gr->size = 0;
   gr->capacity = (initial_capacity > 0) ? initial_capacity : 16;
   gr->data = (void **)calloc(gr->capacity, sizeof(void *));
+  if (!gr->data) {
+    free(gr);
+    return NULL;
+  }
 
   return gr;
 }

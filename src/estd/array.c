@@ -2,7 +2,14 @@
 
 array *array_init(size_t size) {
   array *arr = (array *)malloc(sizeof(array));
+  if (!arr)
+    return NULL;
+
   arr->data = (void **)calloc(size, sizeof(void *));
+  if (!arr->data) {
+    free(arr);
+    return NULL;
+  }
 
   arr->size = size;
 

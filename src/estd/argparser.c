@@ -53,8 +53,20 @@ static void cmd_arg_free(void *ptr) {
 
 cmd_parser *cmd_parser_create() {
   cmd_parser *parser = (cmd_parser *)malloc(sizeof(cmd_parser));
+  if (!parser)
+    return NULL;
+
   parser->args = grow_init_empty;
+  if (!parser->args) {
+    grow_free_(parser->args, NULL);
+    return NULL;
+  }
+
   parser->pos_args = grow_init_empty;
+  if (!parser->pos_args) {
+    grow_free_(parser->pos_args, NULL);
+    return NULL;
+  }
   parser->arg_error = NULL;
 
   return parser;
@@ -89,7 +101,7 @@ easy_error cmd_parser_add(cmd_parser *p, const char *short_name, const char *lon
   return grow_push(p->args, arg);
 }
 
-static cmd_arg *cmd_parser_find(cmd_parser *p, const char *name) {
+static cmd_arg *cmd_parser_find(const cmd_parser *p, const char *name) {
   // TODO:
   for (size_t i = 0; i < grow_size(p->args); ++i) {
     cmd_arg *arg = (cmd_arg *)p->args->data[i];
@@ -159,7 +171,7 @@ easy_error cmd_parser_parse(cmd_parser *p, int argc, char *argv[]) {
   return OK;
 }
 
-bool cmd_is_set(cmd_parser *p, const char *name, easy_error *err) {
+bool cmd_is_set(const cmd_parser *p, const char *name, easy_error *err) {
   if (!p || !p->args || !p->args->data) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return false;
@@ -169,7 +181,7 @@ bool cmd_is_set(cmd_parser *p, const char *name, easy_error *err) {
     SET_CODE_ERROR(err, INVALID_ARGUMENT);
   }
 
-  cmd_arg *arg = cmd_parser_find(p, name);
+  const cmd_arg *arg = cmd_parser_find(p, name);
   if (!arg) {
     SET_CODE_ERROR(err, INVALID_ARGUMENT);
     return false;
@@ -179,7 +191,7 @@ bool cmd_is_set(cmd_parser *p, const char *name, easy_error *err) {
   return arg->is_set;
 }
 
-const string *cmd_get_value(cmd_parser *p, const char *name, easy_error *err) {
+const string *cmd_get_value(const cmd_parser *p, const char *name, easy_error *err) {
   if (!p || !p->args || !p->args->data) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return NULL;
@@ -189,7 +201,7 @@ const string *cmd_get_value(cmd_parser *p, const char *name, easy_error *err) {
     SET_CODE_ERROR(err, INVALID_ARGUMENT);
   }
 
-  cmd_arg *arg = cmd_parser_find(p, name);
+  const cmd_arg *arg = cmd_parser_find(p, name);
   if (!arg) {
     SET_CODE_ERROR(err, INVALID_ARGUMENT);
     return NULL;
@@ -199,7 +211,7 @@ const string *cmd_get_value(cmd_parser *p, const char *name, easy_error *err) {
   return (string *)grow_get(arg->values, 0, err);
 }
 
-const grow *cmd_get_values(cmd_parser *p, const char *name, easy_error *err) {
+const grow *cmd_get_values(const cmd_parser *p, const char *name, easy_error *err) {
   if (!p || !p->args || !p->args->data) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return NULL;
@@ -208,7 +220,7 @@ const grow *cmd_get_values(cmd_parser *p, const char *name, easy_error *err) {
   if (!name) {
     SET_CODE_ERROR(err, INVALID_ARGUMENT);
   }
-  cmd_arg *arg = cmd_parser_find(p, name);
+  const cmd_arg *arg = cmd_parser_find(p, name);
   if (!arg) {
     SET_CODE_ERROR(err, INVALID_ARGUMENT);
     return NULL;
@@ -218,7 +230,7 @@ const grow *cmd_get_values(cmd_parser *p, const char *name, easy_error *err) {
   return arg->values;
 }
 
-const grow *cmd_get_pos_args(cmd_parser *p, easy_error *err) {
+const grow *cmd_get_pos_args(const cmd_parser *p, easy_error *err) {
   if (!p || !p->pos_args || !p->pos_args->data) {
     SET_CODE_ERROR(err, NULL_POINTER);
     return NULL;

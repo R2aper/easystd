@@ -1,5 +1,7 @@
 #include "estd/efile.h"
+#include <errno.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #define is_mode_reader(mode) (mode == READ || mode == READ_BIN)
@@ -66,7 +68,6 @@ freader *openr(const char *filename, FILE_MODE mode, easy_error *err) {
   freader *reader = (freader *)malloc(sizeof(freader));
   if (!reader) {
     SET_CODE_ERROR(err, ALLOCATION_FAILED);
-    free(reader);
     return NULL;
   }
 
@@ -118,6 +119,7 @@ fwriter *openw(const char *filename, FILE_MODE mode, easy_error *err) {
   // Check if file is open
   if (!IS_VALID_FILE(writer)) {
     SET_CODE_ERROR(err, FILE_OPEN_ERROR);
+    closew(writer);
     return NULL;
   }
 
@@ -125,6 +127,7 @@ fwriter *openw(const char *filename, FILE_MODE mode, easy_error *err) {
   easy_error e = update_position_w(writer);
   if (e != OK) {
     SET_CODE_ERROR(err, e);
+    closew(writer);
     return NULL;
   }
 
@@ -314,6 +317,9 @@ string *read_file(freader *reader, easy_error *err) {
 
   file_rewind(reader);
 
+  if (errno != 0)
+    return NULL;
+
   string *text = (string *)malloc(sizeof(string));
   if (!text) {
     SET_CODE_ERROR(err, ALLOCATION_FAILED);
@@ -334,6 +340,8 @@ string *read_file(freader *reader, easy_error *err) {
 
   easy_error e = update_position_r(reader);
   if (e != OK) {
+    free(text->data);
+    free(text);
     SET_CODE_ERROR(err, e);
     return NULL;
   }

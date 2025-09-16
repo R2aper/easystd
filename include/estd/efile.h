@@ -105,7 +105,7 @@ easy_error closew(fwriter *writer);
  * @param size Size of each element
  * @param count Number of elements to be written
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
- * @return The number of objects written successfully
+ * @return Size of objects written successfully
  */
 size_t write_bytes(fwriter *writer, const void *data, size_t size, size_t count, easy_error *err);
 
@@ -125,7 +125,7 @@ int writef(fwriter *writer, const char *format, ...);
  * @param size Size of each element in bytes
  * @param count Count of elements to be read
  * @param err Pointer to easy_error object. Pass NULL if you sure in other parameters
- * @return The number of objects readed successfully
+ * @return Size of objects readed successfully
  */
 size_t read_bytes(freader *reader, void *buffer, size_t size, size_t count, easy_error *err);
 

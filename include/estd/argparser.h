@@ -64,7 +64,7 @@ easy_error cmd_parser_parse(cmd_parser *p, int argc, char *argv[]);
  *
  * @return True if the argument was set, false otherwise.
  */
-bool cmd_is_set(cmd_parser *p, const char *name, easy_error *err);
+bool cmd_is_set(const cmd_parser *p, const char *name, easy_error *err);
 
 /**
  * @brief Gets the value of a single option.
@@ -76,7 +76,7 @@ bool cmd_is_set(cmd_parser *p, const char *name, easy_error *err);
  * @return A pointer to the value of the option, or NULL if the option was not set or an error
  * occurred.
  */
-const string *cmd_get_value(cmd_parser *p, const char *name, easy_error *err);
+const string *cmd_get_value(const cmd_parser *p, const char *name, easy_error *err);
 
 /**
  * @brief Gets the values of a multiple option.
@@ -88,7 +88,7 @@ const string *cmd_get_value(cmd_parser *p, const char *name, easy_error *err);
  * @return A pointer to a growable array of strings containing the values of the option, or NULL if
  * the option was not set or an error occurred.
  */
-const grow *cmd_get_values(cmd_parser *p, const char *name, easy_error *err);
+const grow *cmd_get_values(const cmd_parser *p, const char *name, easy_error *err);
 
 /**
  * @brief Gets the positionals args.
@@ -99,7 +99,7 @@ const grow *cmd_get_values(cmd_parser *p, const char *name, easy_error *err);
  * @return A pointer to a growable array of strings containing the positionals args, or NULL if
  * error accured.
  */
-const grow *cmd_get_pos_args(cmd_parser *p, easy_error *err);
+const grow *cmd_get_pos_args(const cmd_parser *p, easy_error *err);
 
 /*
 #ifdef DEBUG
