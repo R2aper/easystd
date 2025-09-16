@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -100,6 +101,25 @@ void string_free_(string *str) {
   str->data = NULL;
   str->length = str->capacity = 0;
   free(str);
+}
+
+string *string_from_input(void) {
+  string *str = (string *)malloc(sizeof(string));
+  if (!str)
+    return NULL;
+
+  str->data = NULL;
+
+  ssize_t read = getline(&str->data, &str->capacity, stdin);
+  if (read <= 0) {
+    free(str);
+    return NULL;
+  }
+
+  str->length = strlen(str->data) - 1;
+  str->capacity = read;
+
+  return str;
 }
 
 easy_error string_reserve(string *str, size_t new_capacity) {

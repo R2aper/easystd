@@ -67,6 +67,14 @@ string *string_from_cstr(const char *cstr);
  */
 string *string_create(const char *cstr);
 
+/**
+ * @brief Read string from user input(by using getline)
+ * @note str should be freed after using
+ *
+ * @return Initialized string object or NULL if alocation failed
+ */
+string *string_from_input(void);
+
 /// @brief Freed string object
 void string_free_(string *str);
 
