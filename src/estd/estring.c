@@ -103,21 +103,20 @@ void string_free_(string *str) {
   free(str);
 }
 
+void string_free_abs(void *ptr) { string_free_((string *)ptr); }
+
 string *string_from_input(void) {
-  string *str = (string *)malloc(sizeof(string));
+  string *str = string_init_empty();
   if (!str)
     return NULL;
 
-  str->data = NULL;
-
-  ssize_t read = getline(&str->data, &str->capacity, stdin);
-  if (read <= 0) {
-    free(str);
-    return NULL;
+  int c;
+  while ((c = getchar()) != EOF && c != '\n') {
+    if (string_appendc(str, (char)c) != OK) {
+      string_free_(str);
+      return NULL;
+    }
   }
-
-  str->length = strlen(str->data) - 1;
-  str->capacity = read;
 
   return str;
 }

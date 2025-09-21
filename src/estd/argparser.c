@@ -14,8 +14,6 @@ typedef struct arg_t {
 
 } cmd_arg;
 
-static void string_free_abs(void *ptr) { string_free_((string *)ptr); }
-
 static cmd_arg *cmd_arg_init(const char *short_name, const char *long_name, arg_type type) {
   cmd_arg *arg = (cmd_arg *)malloc(sizeof(cmd_arg));
   if (!arg)

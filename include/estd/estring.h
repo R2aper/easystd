@@ -82,6 +82,9 @@ void string_free_(string *str);
   string_free_(str);                                                                               \
   (str) = NULL
 
+/// @brief Same as string_free_ just with void* parametr
+void string_free_abs(void *ptr);
+
 /**
  * @brief Changes the size of the buffer
  * @note If (new_capacity <= str->capacity) then will return OK;
